@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Edit foto="perfil.png"></Edit>
+    <Signup></Signup>
   </div>
 </template>
 
 <script>
-import Edit from './components/Edit.vue'
+import Signup from './components/Signup.vue'
 
 export default {
   name: 'app',
   components: {
-    Edit,
+    Signup,
   },
 }
 </script>

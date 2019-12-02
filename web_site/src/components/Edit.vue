@@ -5,13 +5,13 @@
             <form>
                 <div class="form-group image-upload">
                     <label for="file-input">
-                        <img :src="require(`@/assets/${foto}`)" alt="Foto de Perfil"/>
+                        <img v-on:mouseover="alterar_foto = true" :src="require(`@/assets/perfil.png`)" alt="Foto de Perfil"/>
                     </label>
 
                     <input id="file-input" 
                     type="file" 
                     accept="image/*" 
-                    name="foto"/>
+                    name="end_foto"/>
                 </div>
                 <div class="form-group col-10">
                     <input type="email" 
@@ -19,28 +19,28 @@
                     id="InputEmail1" 
                     aria-describedby="emailHelp" 
                     placeholder="E-mail"
-                    nome="email">
+                    v-model="email">
                 </div>
                 <div class="form-group col-10">
                     <input type="text" 
                     class="form-control" 
                     id="InputNome" 
                     placeholder="Nome"
-                    name="nome">
+                    v-model="nome">
                 </div>
                 <div class="form-group col-10">
                     <input type="password" 
                     class="form-control" 
                     id="InputPassword" 
                     placeholder="Senha"
-                    name="senha">
+                    v-model="senha">
                 </div>
                 <div class="form-group col-10">
                     <input type="password" 
                     class="form-control" 
                     id="confirmaPassword" 
                     placeholder="Confirmar senha"
-                    name="confirmacao">
+                    v-model="confirmacao">
                 </div>
                 
                 <button type="submit" class="btn btn-primary col-4">Salvar Alterações</button>
@@ -53,6 +53,11 @@
 <script>
 export default {
     name:'Edit',
+    data(){
+        return{
+            alterar_foto:false,
+        }
+    },
     props:{
         foto: String,
     }
@@ -88,6 +93,7 @@ export default {
     .image-upload img{
         margin:0 auto;
         border-radius: 50%;
+        cursor: pointer;
         
     }
 

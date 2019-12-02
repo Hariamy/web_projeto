@@ -11,14 +11,14 @@
                             id="InputEmail1" 
                             aria-describedby="emailHelp" 
                             placeholder="Email"
-                            name="email">
+                            v-model="email">
                         </div>
                         <div class="form-group">
                             <input type="password" 
                             class="form-control" 
                             id="InputPassword1" 
                             placeholder="Senha"
-                            name="senha">
+                            v-model="senha">
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                         <small class="form-text">

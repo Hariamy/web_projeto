@@ -3,16 +3,16 @@
         <div class="externa vh-100 vw-100">
             <div class="box col-4 justify-content-center">
                 <label>Formulário de Cadastro</label>
-                <form>
+                <form  v-on:submit.prevent="getData">
                     <div class="form-group image-upload">
                         <label for="file-input">
-                            <img :src="require(`@/assets/${imagem}`)" alt="Foto de Perfil"/>
+                            <img v-on:mouseover="alterar_foto = true" :src="require(`@/assets/perfil.png`)" alt="Foto de Perfil"/>
                         </label>
 
                         <input id="file-input" 
                         type="file" 
                         accept="image/*" 
-                        name="foto"/>
+                        name="end_foto"/>
                     </div>
                     <div class="form-group col-10">
                         <input type="email" 
@@ -20,28 +20,28 @@
                         id="InputEmail1" 
                         aria-describedby="emailHelp" 
                         placeholder="E-mail"
-                        nome="email">
+                        v-model="email">
                     </div>
                     <div class="form-group col-10">
                         <input type="text" 
                         class="form-control" 
                         id="InputNome" 
                         placeholder="Nome"
-                        name="nome">
+                        v-model="nome">
                     </div>
                     <div class="form-group col-10">
                         <input type="password" 
                         class="form-control" 
                         id="InputPassword" 
                         placeholder="Senha"
-                        name="senha">
+                        v-model="senha">
                     </div>
                     <div class="form-group col-10">
                         <input type="password" 
                         class="form-control" 
                         id="confirmaPassword" 
                         placeholder="Confirmar senha"
-                        name="confirmacao">
+                        v-model="confirmacao">
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Criar Conta</button>
@@ -55,6 +55,21 @@
 <script>
 export default {
     name: 'Signup',
+    data(){
+        return{
+            alterar_foto:false,
+        }
+    },
+    methods:{
+        getData(){
+            //let user = {
+            //    nome: this.nome,
+            //    email: this.email,
+            //    senha: this.senha,
+            //}
+            //user.nome = this.nome;
+        }
+    },
     props:{
         imagem:String,
     }
@@ -100,7 +115,7 @@ export default {
     .image-upload img{
         margin:0 auto;
         border-radius: 50%;
-        
+        cursor: pointer;        
     }
 
 </style>

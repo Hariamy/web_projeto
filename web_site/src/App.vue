@@ -1,26 +1,16 @@
 <template>
   <div id="app">
-    <Signup imagem='perfil.png'></Signup>
+    <Edit foto="perfil.png"></Edit>
   </div>
 </template>
 
 <script>
-import Signup from './components/Signup.vue'
+import Edit from './components/Edit.vue'
 
 export default {
   name: 'app',
   components: {
-    Signup
-  },
-  data() {
-    return {
-      isShowing: false 
-    }
-  },
-  methods: {
-    toggleShow() {
-      alert("test");
-    }
+    Edit,
   },
 }
 </script>

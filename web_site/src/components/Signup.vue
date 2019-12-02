@@ -14,7 +14,7 @@
                         accept="image/*" 
                         name="foto"/>
                     </div>
-                    <div class="form-group col-7">
+                    <div class="form-group col-10">
                         <input type="email" 
                         class="form-control" 
                         id="InputEmail1" 
@@ -22,21 +22,21 @@
                         placeholder="E-mail"
                         nome="email">
                     </div>
-                    <div class="form-group col-7">
+                    <div class="form-group col-10">
                         <input type="text" 
                         class="form-control" 
                         id="InputNome" 
                         placeholder="Nome"
                         name="nome">
                     </div>
-                    <div class="form-group col-7">
+                    <div class="form-group col-10">
                         <input type="password" 
                         class="form-control" 
                         id="InputPassword" 
                         placeholder="Senha"
                         name="senha">
                     </div>
-                    <div class="form-group col-7">
+                    <div class="form-group col-10">
                         <input type="password" 
                         class="form-control" 
                         id="confirmaPassword" 

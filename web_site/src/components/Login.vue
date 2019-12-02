@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <div class="container-fluid">
+        <div class="container-fluid ">
             <div class="externa vh-100 vw-100">
                 <div class = "menuLogin float-md-right vh-100 col justify-content-center">
                     <img alt="Logo" src="../assets/logo.png">
@@ -10,13 +10,15 @@
                             class="form-control" 
                             id="InputEmail1" 
                             aria-describedby="emailHelp" 
-                            placeholder="Email">
+                            placeholder="Email"
+                            name="email">
                         </div>
                         <div class="form-group">
                             <input type="password" 
                             class="form-control" 
                             id="InputPassword1" 
-                            placeholder="Senha">
+                            placeholder="Senha"
+                            name="senha">
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                         <small class="form-text">

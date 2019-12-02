@@ -1,17 +1,27 @@
 <template>
   <div id="app">
-    <Login></Login>
+    <Signup imagem='perfil.png'></Signup>
   </div>
 </template>
 
 <script>
-import Login from './components/Login.vue'
+import Signup from './components/Signup.vue'
 
 export default {
   name: 'app',
   components: {
-    Login
-  }
+    Signup
+  },
+  data() {
+    return {
+      isShowing: false 
+    }
+  },
+  methods: {
+    toggleShow() {
+      alert("test");
+    }
+  },
 }
 </script>
 

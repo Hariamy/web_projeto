@@ -48,12 +48,30 @@
       </div>
 
     </div>
-    <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
+    <div class="d-flex justify-content-center add-receita-externo" v-on:click="add_receita=!add_receita" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
-        <div class="d-flex justify-content-center">
-          <h3 class="font-weight-bold">INSERIR RECEITA</h3>
-        </div>
-        <img class="fechar-botao" v-on:click="add_receita=!add_receita" src="../assets/fechar.svg" />
+        <img class="fechar-botao d-flex justify-content-start" src="../assets/fechar.svg" />
+        <h3 class="font-weight-bold d-flex justify-content-center">INSERIR RECEITAS</h3>
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control col-12" placeholder="Nome" v-model="nome_receita">
+          </div>
+          <div class="form-group">
+            <input type="date" class="form-control col-12" v-model="data_pagamento">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control col-12" placeholder="Valor" v-model="valor">
+          </div>
+          <div class="form-group">
+            <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria">
+              <option selected>Escolha uma categoria</option>
+              <option value="1">Contas</option>
+              <option value="2">Emprestimo</option>
+              <option value="3">Internet</option>
+            </select>
+          </div>        
+          <button class="btn btn-primary">Criar</button>
+        </form>
       </div>
     </div>
   </div>
@@ -136,7 +154,7 @@ img {
 }
 
 .add-receita-externo {
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
   height: 100%;
@@ -151,7 +169,7 @@ img {
   cursor: pointer;
 }
 .table-fixed tbody {
-    height: 40vh;
+    height: 45vh;
     overflow-y: auto;
     width: 100%;
     

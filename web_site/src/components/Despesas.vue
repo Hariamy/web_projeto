@@ -51,31 +51,14 @@
     </div>
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
-        <img class="fechar-botao d-flex justify-content-start" v-on:click="add_receita=!add_receita" src="../assets/fechar.svg" />
-        <h3 class="font-weight-bold d-flex justify-content-center">INSERIR DESPESAS</h3>
-        <form>
-          <div class="form-group">
-            <input type="text" class="form-control " placeholder="Nome" v-model="nome_despesa">
-          </div>
-          <div class="form-group">
-            <input type="date" class="form-control " v-model="vencimento">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control " placeholder="Valor" v-model="valor">
-          </div>
-          <div class="form-group">
-            <select class="custom-select" id="inputGroupSelect01" v-model="categoria">
-              <option selected>Escolha uma categoria</option>
-              <option value="1">Contas</option>
-              <option value="2">Emprestimo</option>
-              <option value="3">Internet</option>
-            </select>
-          </div>        
-          <button class="btn btn-primary">Criar</button>
-        </form>
+        <div class="d-flex justify-content-center">
+          <h3 class="font-weight-bold">INSERIR DESPESAS</h3>
+        </div>
+        <img class="fechar-botao" v-on:click="add_receita=!add_receita" src="../assets/fechar.svg" />
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -154,7 +137,7 @@ img {
 }
 
 .add-receita-externo {
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 100%;
@@ -169,7 +152,7 @@ img {
   cursor: pointer;
 }
 .table-fixed tbody {
-    height: 45vh;
+    height: 40vh;
     overflow-y: auto;
     width: 100%;
     
@@ -189,5 +172,4 @@ img {
     float: left;
     position: relative;
 }
-
 </style>

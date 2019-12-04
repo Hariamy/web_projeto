@@ -93,14 +93,24 @@
     </div>
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
-        <div class="d-flex justify-content-center">
-          <h3 class="font-weight-bold">INSERIR DESPESAS</h3>
-        </div>
-        <img class="fechar-botao" v-on:click="add_receita=!add_receita" src="../assets/fechar.svg" />
+          <img class="fechar-botao d-flex justify-content-start" v-on:click="add_receita=!add_receita" src="../assets/fechar.svg" />
+          <h3 class="font-weight-bold d-flex justify-content-center">INSERIR CATEGORIA</h3>
+          <form>
+            <div class="form-group d-flex justify-content-center">
+              <input type="text" class="form-control" placeholder="Nome" v-model="nome_categoria" id="nome-categoria">
+              <input type="text" class="form-control" placeholder="#000000" v-model="cor_categoria">
+            </div>
+                   
+            <button class="btn btn-primary">Inserir</button>
+        </form>
+        
+        
       </div>
     </div>
   </div>
 </template>
+
+
 
 <script>
 export default {
@@ -108,6 +118,7 @@ export default {
   props: {
     mes: String
   },
+
   data() {
     return {
       coisas: [
@@ -135,6 +146,9 @@ export default {
         this.botao_menu = true;
         this.opcoes_menu = false;
       }
+    },
+    printa(){
+      alert(this.cor_categoria);
     }
   }
 };
@@ -211,4 +225,8 @@ img {
   float: left;
   position: relative;
 }
+#nome-categoria{
+  margin-right: 10px;
+}
+
 </style>

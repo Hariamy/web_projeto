@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 //import Home from './components/HelloWorld'
-import Home from './views/Login'
+import Inicial from './views/InicialView'
+import Cadastrar from './views/CadastrarView'
 import Receitas from './views/ReceitasView'
 import Categorias from './views/CategoriasView'
 import Despesas from './views/DespesasView'
@@ -14,8 +15,12 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      name: "inicial",
+      component: Inicial
+    }, {
+      path: "/cadastrar",
+      name: "cadastrar",
+      component: Cadastrar
     }, {
       path: "/receitas",
       name: "receitas",

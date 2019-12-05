@@ -4,7 +4,9 @@
       
       <div class="d-flex justify-content-around">
         <div class="col-md-2 align-self-center">
-          <img src="../assets/icone.svg" />
+          <router-link to="/graficosMeses">
+            <img src="../assets/icone.svg" />
+          </router-link>
         </div>
         
         <div class="col-md-7">

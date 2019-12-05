@@ -19,7 +19,7 @@
                 <tbody>
                   <tr v-for="coisa in coisas" :key="coisa.id">
                     <td class="col-5">Nome das coisas</td>
-                    <td class="col-2">Mark</td>
+                    <td class="col-2 d-flex justify-content-center"><div class="cor" v-bind:style="{ backgroundColor: coisa.cor }"></div></td>
                     <td class="col-4">
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
@@ -56,7 +56,7 @@
                 <tbody>
                   <tr v-for="coisa in coisas" :key="coisa.id">
                     <td class="col-5">Nome das coisas</td>
-                    <td class="col-2">Mark</td>
+                    <td class="col-2 d-flex justify-content-center"><div class="cor" v-bind:style="{ backgroundColor: coisa.cor }"></div></td>
                     <td class="col-4">
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
@@ -111,17 +111,17 @@ export default {
   data() {
     return {
       coisas: [
-        { id: 1 },
-        { id: 0 },
-        { id: 2 },
-        { id: 3 },
-        { id: 4 },
-        { id: 5 },
-        { id: 6 },
-        { id: 7 },
-        { id: 8 },
-        { id: 9 },
-        { id: 10 }
+        { cor: "#ff0000", id: 1 },
+        { cor: "#fff000", id: 0 },
+        { cor: "#ff0000", id: 2 },
+        { cor: "#ff0000", id: 3 },
+        { cor: "#ff00f0", id: 4 },
+        { cor: "#ffa000", id: 5 },
+        { cor: "#ff0b00", id: 6 },
+        { cor: "#0f00e0", id: 7 },
+        { cor: "#ff0000", id: 8 },
+        { cor: "#ff0000", id: 9 },
+        { cor: "#ff0000", id: 10 }
       ],
       add_receita: false
     };
@@ -149,6 +149,12 @@ export default {
 .margem-tabela {
   margin: 20px;
   padding: 20px;
+}
+
+.cor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
 
 a {

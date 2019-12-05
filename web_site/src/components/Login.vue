@@ -1,9 +1,7 @@
 <template>
-  <div class="login">
-    <div class="externa">
       <div class="menuLogin float-md-right vh-100 d-flex flex-column justify-content-center">
         <div class="d-flex justify-content-center">
-          <img alt="Logo" src="../assets/logo.png" />
+          <img alt="Logo" src="../assets/icone.svg" />
         </div>
         <form>
           <div class="form-group">
@@ -27,7 +25,7 @@
           </div>
 
           <div class="d-flex justify-content-center">
-            <button class="btn btn-primary">Login</button>
+            <button type="button" class="btn btn-primary" v-on:click="redirect">Login</button>
           </div>
 
           <div class="d-flex justify-content-center">
@@ -35,18 +33,21 @@
           </div>
 
           <div class="d-flex justify-content-center">
-            <a href>Criar conta</a>
-            <br />
+            <router-link to="/cadastrar">Criar conta</router-link>
           </div>
         </form>
       </div>
-    </div>
-  </div>
+
 </template>
 
 <script>
 export default {
-  name: "Login"
+  name: "Login",
+  methods: {
+    redirect() {
+      this.$router.push('/graficosMeses')
+    }
+  }
 };
 </script>
 

@@ -18,7 +18,7 @@ app.listen(porta);
 
 // Iniciando o DB
 mongoose.connect(
-	'mongodb://200.19.179.129:27017/web',  
+	'mongodb://localhost:27017/web',  
 	{ useNewUrlParser: true, useUnifiedTopology: true },
     err => { if (err) return console.log("ih rapaz deu rum :("); console.error(err); }
 

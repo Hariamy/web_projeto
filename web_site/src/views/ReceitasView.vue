@@ -24,7 +24,12 @@ import Receitas from '../components/Receitas.vue'
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+    get_receitas,
+    get_receita_id,
+    inserir_receita,
+    remover_receita,
+    editar_receita,
   },
   components: {
     Menu,
@@ -34,9 +39,53 @@ export default {
   data() {
     return {
       calcular: false,
+      url_receitas: 'http://localhost/3001/api/receitas/',
     }
   },
   methods: {
+    get_receitas: async function(){
+      let query = await fetch(this.url_receitas);
+      return query;
+    },
+
+    get_receita_id: async function(id){
+      let query = await fetch(this.url_receitas+id);
+      return query;
+    },
+
+    inserir_receita: async function(receita){
+      let query = await fetch(this.url_receitas,{
+        method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+        },
+        body:receita
+      })
+    },
+    
+
+    remover_receita: async function(id){
+      let query = await fetch(this.url_receitas+id,{
+        method: 'DELETE',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+        },
+      })
+    },
+
+    editar_receita: async function(receita,id){
+      let query = await fetch(this.url_receitas+id,{
+        method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+        },
+        body:receita
+      })
+    },
+
    
   }
 }

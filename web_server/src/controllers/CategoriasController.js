@@ -22,6 +22,7 @@ module.exports = {
 	},
 
 	async criar(req, res) {
+		console.log(req.body);
 		const categoria = await Categoria.create(req.body);
 
 		return res.json(categoria);

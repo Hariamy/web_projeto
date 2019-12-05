@@ -46,7 +46,63 @@
 
 <script>
 export default {
-  name: "Login"
+  name: "Login",
+  props: {
+    get_usuarios,
+    get_usuario_id,
+    inserir_usuario,
+    remover_usuario,
+    editar_usuario,
+  },
+  data(){
+    return{
+       url_usuarios: 'http://localhost/3001/api/usuarios/',
+    }
+  },
+  methods: {
+    get_usuarios: async function(){
+      let query = await fetch(this.url_usuarios);
+      return query;
+    },
+
+    get_usuario_id: async function(id){
+      let query = await fetch(this.url_usuarios+id);
+      return query;
+    },
+
+    inserir_usuario: async function(usuario){
+      let query = await fetch(this.url_usuarios,{
+        method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+        },
+        body:usuario
+      })
+    },
+
+    editar_usuario: async function(usuario){
+      let query = await fetch(this.url_usuarios+id,{
+        method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+        },
+        body:usuario
+      })
+    },
+
+     remover_usuario: async function(id){
+      let query = await fetch(this.url_usuarios+id,{
+        method: 'DELETE',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+        },
+      })
+    },
+
+  },
 };
 </script>
 

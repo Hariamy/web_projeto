@@ -42,16 +42,16 @@
         />
       </div>
       <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Criar Conta</button>
+        <button type="button" class="btn btn-primary">Criar Conta</button>
       </div>
     </form>
     <div class="d-flex justify-content-center">
-      <br>
-      <small class="form-text">Já possui cadastro?</small>
+      
+      <p class="form-text">Já possui cadastro?</p>
     </div>
 
     <div class="d-flex justify-content-center">
-      <router-link to='/'>Realizar Login</router-link>
+      <router-link class="text-white" to='/'>Realizar Login</router-link>
     </div>
   </div>
 </template>
@@ -64,8 +64,8 @@ export default {
 
 <style scoped>
 .menuLogin {
-  padding: 5%;
-  background-color: rgba(255, 255, 255, 0.5);
+  padding: 10%;
+  background-color: rgba(125, 125, 125, 0.2);
   width: 40vw;
   height: 100%;
 }
@@ -86,10 +86,20 @@ img {
 .image-upload > input {
   display: none;
 }
+
 .image-upload img{
   border-radius: 50%;
   width: 140px;
   height: 140px;
   cursor: pointer;
+}
+
+p {
+  margin-bottom: 0;
+  margin-top: 15px;
+  padding-bottom: 0;
+}
+a:link, a:visited, a:hover, a:active {
+  color: inherit;
 }
 </style>

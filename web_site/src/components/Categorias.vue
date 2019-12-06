@@ -19,7 +19,9 @@
                 <tbody>
                   <tr v-for="coisa in coisas" :key="coisa.id">
                     <td class="col-5">Nome das coisas</td>
-                    <td class="col-2 d-flex justify-content-center"><div class="cor" v-bind:style="{ backgroundColor: coisa.cor }"></div></td>
+                    <td class="col-2 d-flex justify-content-center">
+                      <div class="cor" v-bind:style="{ backgroundColor: coisa.cor }"></div>
+                    </td>
                     <td class="col-4">
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
@@ -56,7 +58,9 @@
                 <tbody>
                   <tr v-for="coisa in coisas" :key="coisa.id">
                     <td class="col-5">Nome das coisas</td>
-                    <td class="col-2 d-flex justify-content-center"><div class="cor" v-bind:style="{ backgroundColor: coisa.cor }"></div></td>
+                    <td class="col-2 d-flex justify-content-center">
+                      <div class="cor" v-bind:style="{ backgroundColor: coisa.cor }"></div>
+                    </td>
                     <td class="col-4">
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
@@ -93,10 +97,29 @@
     </div>
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
+        <h3 class="font-weight-bold d-flex justify-content-center">INSERIR CATEGORIA</h3>
+        <br />
         <div class="d-flex justify-content-center">
-          <h3 class="font-weight-bold">INSERIR DESPESAS</h3>
+          <form>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nome"
+                v-model="nome_categoria"
+                id="nome-categoria"
+              />
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="#000000" v-model="cor_categoria" />
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-danger" v-on:click="add_receita=!add_receita">CANCELAR</button>
+              <button class="btn btn-success">CRIAR</button>
+            </div>
+          </form>
         </div>
-        <img class="fechar-botao" v-on:click="add_receita=!add_receita" src="../assets/fechar.svg" />
       </div>
     </div>
   </div>
@@ -146,6 +169,11 @@ export default {
   margin: 60px;
   padding: 60px;
 }
+
+button {
+  margin: 10px;
+}
+
 .margem-tabela {
   margin: 20px;
   padding: 20px;

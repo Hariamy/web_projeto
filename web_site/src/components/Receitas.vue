@@ -2,7 +2,7 @@
   <div class="ganhos">
 
     <div class=" margem p-2 my-3 rounded shadow-sm border border-success">
-      
+       
       <h3 class="text-center text-success font-weight-bold text-uppercase">RECEITAS</h3>
       
       <div class="margem-tabela">
@@ -50,10 +50,33 @@
     </div>
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
+        <h3 class="font-weight-bold d-flex justify-content-center">INSERIR RECEITAS</h3>
+        <br>
         <div class="d-flex justify-content-center">
-          <h3 class="font-weight-bold">INSERIR RECEITA</h3>
+          <form>
+            <div class="form-group">
+              <input type="text" class="form-control col-12" placeholder="Nome" v-model="nome_receita">
+            </div>
+            <div class="form-group">
+              <input type="date" class="form-control col-12" v-model="data_pagamento">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control col-12" placeholder="Valor" v-model="valor">
+            </div>
+            <div class="form-group">
+              <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria">
+                <option value="" selected disabled hidden>Escolha uma categoria</option>
+                <option value="1">Contas</option>
+                <option value="2">Emprestimo</option>
+                <option value="3">Internet</option>
+              </select>
+            </div>        
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-danger" v-on:click="add_receita=!add_receita">CANCELAR</button>
+              <button class="btn btn-primary">CRIAR</button>
+            </div>
+          </form>
         </div>
-        <img class="fechar-botao" v-on:click="add_receita=!add_receita" src="../assets/fechar.svg" />
       </div>
     </div>
   </div>
@@ -107,6 +130,10 @@ export default {
 .margem-tabela {
   margin: 20px;
   padding: 20px;
+}
+
+button {
+  margin: 10px;
 }
 
 a {

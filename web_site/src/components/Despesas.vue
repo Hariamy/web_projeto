@@ -26,7 +26,7 @@
                         <td class="col-3">
                           <div class="d-flex justify-content-center">
                             <div class="col-md-2">
-                              <a href="#" ><img src="../assets/editar.svg" /></a>
+                              <a href="#" ><img src="../assets/editar.svg" v-on:click="edit_despesa=!edit_despesa" /></a>                              
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
@@ -49,6 +49,37 @@
       </div>
 
     </div>
+    <div class="d-flex justify-content-center add-receita-externo" v-if="edit_despesa">
+      <div class="add-receita shadow rounded align-self-center">
+        <h3 class="font-weight-bold d-flex justify-content-center">EDITAR DESPESA</h3>
+        <br>
+        <div class="d-flex justify-content-center">
+          <form>
+            <div class="form-group">
+              <input type="text" class="form-control col-12" placeholder="Nome" v-model="nome_despesa">
+            </div>
+            <div class="form-group">
+              <input type="date" class="form-control col-12" v-model="data_pagamento">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control col-12" placeholder="Valor" v-model="valor">
+            </div>
+            <div class="form-group">
+              <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria">
+                <option value="" selected disabled hidden>Escolha uma categoria</option>
+                <option value="1">Contas</option>
+                <option value="2">Emprestimo</option>
+                <option value="3">Internet</option>
+              </select>
+            </div>        
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-danger" v-on:click="edit_despesa=!edit_despesa">CANCELAR</button>
+              <button class="btn btn-primary">CRIAR</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
         <h3 class="font-weight-bold d-flex justify-content-center">INSERIR DESPESAS</h3>
@@ -56,7 +87,7 @@
         <div class="d-flex justify-content-center">
           <form>
             <div class="form-group">
-              <input type="text" class="form-control col-12" placeholder="Nome" v-model="nome_receita">
+              <input type="text" class="form-control col-12" placeholder="Nome" v-model="nome_despesa">
             </div>
             <div class="form-group">
               <input type="date" class="form-control col-12" v-model="data_pagamento">
@@ -106,6 +137,7 @@ export default {
         {id: 10}
       ],
       add_receita: false,
+      edit_despesa:false,
     };
   },
   methods: {

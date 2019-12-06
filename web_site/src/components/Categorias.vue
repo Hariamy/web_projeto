@@ -26,7 +26,7 @@
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
                           <a href="#">
-                            <img src="../assets/editar.svg" />
+                            <img src="../assets/editar.svg" v-on:click="edit_categoria=!edit_categoria"/>
                           </a>
                         </div>
                         <div class="col-md-1"></div>
@@ -65,7 +65,7 @@
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
                           <a href="#">
-                            <img src="../assets/editar.svg" />
+                            <img src="../assets/editar.svg" v-on:click="edit_categoria=!edit_categoria"/>
                           </a>
                         </div>
                         <div class="col-md-1"></div>
@@ -95,6 +95,33 @@
         <div class="p-4"></div>
       </div>
     </div>
+    <div class="d-flex justify-content-center add-receita-externo" v-if="edit_categoria">
+      <div class="add-receita shadow rounded align-self-center">
+        <h3 class="font-weight-bold d-flex justify-content-center">EDITAR CATEGORIA</h3>
+        <br>
+        <div class="d-flex justify-content-center">
+          <form>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nome"
+                v-model="nome_categoria"
+                id="nome-categoria"
+              />
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="#000000" v-model="cor_categoria" />
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-danger" v-on:click="edit_categoria=!edit_categoria">CANCELAR</button>
+              <button class="btn btn-success">SALVAR EDIÇÃO</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
         <h3 class="font-weight-bold d-flex justify-content-center">INSERIR CATEGORIA</h3>
@@ -111,9 +138,10 @@
               />
             </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="#000000" v-model="cor_categoria" />
+            <div class="form-group justify-content-start">
+                <input type="text" class="form-control" placeholder="#000000" v-model="cor_categoria" />
             </div>
+
             <div class="d-flex justify-content-center">
               <button class="btn btn-danger" v-on:click="add_receita=!add_receita">CANCELAR</button>
               <button class="btn btn-success">CRIAR</button>
@@ -146,7 +174,9 @@ export default {
         { cor: "#ff0000", id: 9 },
         { cor: "#ff0000", id: 10 }
       ],
-      add_receita: false
+      add_receita: false,
+      edit_categoria: false,
+      cor_categoria:'',
     };
   },
   methods: {

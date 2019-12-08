@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const requireDir = require('require-dir');
-const porta = 3001
+const porta = process.env.PORT || 3001;
 
 // Iniciando o APP
 const app = express();
@@ -17,16 +17,10 @@ app.use('/api', require('./src/routes'));
 app.listen(porta);
 
 // Iniciando o DB
+// admin
+// FdHB83x5Dz7pvlNM
 mongoose.connect(
-	'mongodb://200.19.179.129:27017/web',  
+	'mongodb+srv://admin:FdHB83x5Dz7pvlNM@cluster0-lford.mongodb.net/db_gfin?retryWrites=true&w=majority',  
 	{ useNewUrlParser: true, useUnifiedTopology: true },
-    err => { if (err) return console.log("ih rapaz deu rum :("); console.error(err); }
-
-).then(
-    (err) => { 
-        if (!err) { 
-            console.log("Conexão realizada com sucesso!"); 
-            console.log("localhost:"+porta+"/api")
-        }
-    }
-);
+    err => { return 1; }
+)

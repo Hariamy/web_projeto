@@ -15,21 +15,22 @@ module.exports = {
 		return res.json(usuario);
 	},
 
-	async buscaEmail(req, res) {
-		const usuario = await Usuario.findOne( { email: req.params.email } );
-
-		return res.json(usuario);
-	},
-
 	async criar(req, res) {
-		const usuario = await Usuario.create(req.body);
+		try {
+			req.body._id = req.body.email;
 
-		return res.json(usuario);
+			const usuario = await Usuario.create(req.body);
+
+			return res.json(usuario);
+
+		} catch (err) {
+			return res.send(err);
+		}
 	},
 	
 	async editar(req, res) {
-		const usuario = await Usuario.findOneAndUpdate(req.params.id, req.body, { new: true });
-
+		const usuario = await Usuario.findOneAndUpdate(req.params.id, req.body, { new: true, useFindAndModify: false });
+		
 		return res.json(usuario);
 	},
 
@@ -38,5 +39,160 @@ module.exports = {
 
 		return res.send();
 	},
+
+	async add_receita(req, res) {
+		try {
+			req.body.id = Date.now().toString();
+
+			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { receitas: req.body }}, { new: true, useFindAndModify: false });
+
+			return res.json(usuario)
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+	async editar_receita(req, res) {
+		try {
+			const usuario = await Usuario.findById(req.params.id);
+			const receitas = usuario.receitas;
+
+			const index = receitas.findIndex(obj => obj.id =  req.body.id);
+
+			if (index != undefined) {
+				receitas[index] = req.body
+
+				const update = { receitas };
+
+				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+
+				return res.json(up_usuario);
+
+			} else {
+				return res.send({erro: "deu rum"})
+			}
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+	async add_categoria_receita(req, res) {
+		try {
+			req.body.id = Date.now().toString();
+
+			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { categorias_receitas: req.body }}, { new: true, useFindAndModify: false });
+
+			return res.json(usuario)
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+	async editar_categoria_receita(req, res) {
+		try {
+			const usuario = await Usuario.findById(req.params.id);
+			const categorias_receitas = usuario.categorias_receitas;
+
+			const index = categorias_receitas.findIndex(obj => obj.id =  req.body.id);
+
+			if (index != undefined) {
+				categorias_receitas[index] = req.body
+
+				const update = { categorias_despesas };
+				
+				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+
+				return res.json(up_usuario);
+
+			} else {
+				return res.send({erro: "deu rum"})
+			}
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+
+	async add_despesa(req, res) {
+		try {
+			req.body.id = Date.now().toString();
+
+			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { despesas: req.body }}, { new: true, useFindAndModify: false });
+
+			return res.json(usuario)
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+	async editar_despesa(req, res) {
+		try {
+			const usuario = await Usuario.findById(req.params.id);
+			const despesas = usuario.despesas;
+
+			const index = despesas.findIndex(obj => obj.id =  req.body.id);
+
+			if (index != undefined) {
+				despesas[index] = req.body
+
+				const update = { despesas };
+				
+				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+
+				return res.json(up_usuario);
+
+			} else {
+				return res.send({erro: "deu rum"})
+			}
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+	async add_categoria_despesa(req, res) {
+		try {
+			req.body.id = Date.now().toString();
+
+			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { categorias_despesas: req.body }}, { new: true, useFindAndModify: false });
+
+			return res.json(usuario)
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+	async editar_categoria_despesa(req, res) {
+		try {
+			const usuario = await Usuario.findById(req.params.id);
+			const categorias_despesas = usuario.categorias_despesas;
+
+			const index = categorias_despesas.findIndex(obj => obj.id =  req.body.id);
+
+			if (index != undefined) {
+				categorias_despesas[index] = req.body
+
+				const update = { categorias_despesas };
+				
+				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+
+				return res.json(up_usuario);
+
+			} else {
+				return res.send({erro: "deu rum"})
+			}
+
+		} catch (err) {
+			return res.send(err)
+		}
+	},
+
+
 
 };

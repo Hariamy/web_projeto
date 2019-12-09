@@ -3,9 +3,12 @@
         <div class="d-flex justify-content-center">
           <img alt="Logo" src="../assets/icone.svg" />
         </div>
+        <h1 class="text-center text-white font-weight-bold" >GFIN</h1>
+        <h4 class="text-center text-white">Gerenciador Financeiro</h4>
         <form>
           <div class="form-group">
             <input
+              v-model="email"
               type="email"
               class="form-control"
               id="InputEmail1"
@@ -16,6 +19,7 @@
           </div>
           <div class="form-group">
             <input
+              v-model="senha"
               type="password"
               class="form-control"
               id="InputPassword1"
@@ -25,7 +29,7 @@
           </div>
 
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-primary" v-on:click="redirect">Login</button>
+            <button type="button" class="btn btn-primary" v-on:click="autenticar">Login</button>
           </div>
 
           <div class="d-flex justify-content-center">
@@ -41,11 +45,34 @@
 </template>
 
 <script>
+
+import { endpoints } from "../conexaoApi"
+
 export default {
   name: "Login",
+  data() {
+    return {
+      email: "",
+      senha: "",
+      opcoes_usuario: false,
+      usuario: {}
+    };
+  },
   methods: {
-    redirect() {
-      this.$router.push('/graficosMeses')
+    autenticar: async function () {
+      const response = await fetch( endpoints.usuario + this.email);
+      const usuario = await response.json()
+
+      if (await usuario.senha === this.senha) {
+       
+        localStorage.email = this.email;
+   
+        this.$router.push('/graficosMeses')
+        
+      } else {
+        alert("Erro ao realizar login")
+      }
+
     }
   }
 };
@@ -70,12 +97,18 @@ export default {
 img {
   width: 200px;
   height: 200px; 
-  margin-bottom: 100px;
 }
 p {
   margin-bottom: 0;
   margin-top: 15px;
   padding-bottom: 0;
+}
+h1 {
+  margin-bottom: 0;
+  margin-top: 15px;  
+}
+h4 {
+  margin-bottom: 60px;
 }
 a:link, a:visited, a:hover, a:active {
   color: inherit;

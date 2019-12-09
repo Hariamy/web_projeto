@@ -9,25 +9,25 @@
         <li v-on:mouseover="m_receitas=true" v-on:mouseleave="m_receitas=false">
           <router-link to="/receitas">
             <img src="../assets/menu/receitas.svg"/>
-            <span v-show="m_receitas">RECEITAS</span>
+            <span class="font-weight-bold text-success" v-show="m_receitas">RECEITAS</span>
           </router-link>
         </li>
         <li v-on:mouseover="m_despesas = true" v-on:mouseleave="m_despesas = false">
           <router-link to="/despesas">
             <img src="../assets/menu/despesas.svg"/>
-            <span v-show="m_despesas">DESPESAS</span>
+            <span class="font-weight-bold text-danger" v-show="m_despesas">DESPESAS</span>
           </router-link>
         </li>
         <li v-on:mouseover="m_categorias = true" v-on:mouseleave="m_categorias = false">
           <router-link to="/categorias">
             <img src="../assets/menu/categorias.svg"/>
-            <span v-show="m_categorias">CATEGORIAS</span>
+            <span class="font-weight-bold text-warning" v-show="m_categorias">CATEGORIAS</span>
           </router-link>
         </li>
         <li v-on:mouseover="m_graficos = true" v-on:mouseleave="m_graficos = false">
           <router-link to="/graficosmeses">
             <img src="../assets/menu/graficos.svg"/>
-            <span v-show="m_graficos">GRÁFICOS</span>
+            <span class="font-weight-bold text-info" v-show="m_graficos">GRÁFICOS</span>
           </router-link>
         </li>
       </ul>
@@ -87,12 +87,17 @@ button {
   top: calc(50vh - 140px);
   width: 250px;
 }
+
+ul {
+  margin: 0;
+  padding: 0;
+}
 li {
   list-style: none;
 }
 img {
   margin: 10px;
-  margin-left: 0;
+  margin-left: 20px;
   width: 60px;
   height: 60px;
 }

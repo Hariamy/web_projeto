@@ -16,13 +16,13 @@
             <div class="d-flex justify-content-center ">
 
               <div class="rounded col-md-3 py-1 px-lg-2 bg-success text-white">
-                <p class="text-center">Saldo<br>R$ {{ formatar(saldo) }}</p>
+                <p class="text-center font-weight-bold">Saldo<br>R$ {{ formatar(usuario.saldo) }}</p>
               </div>
               
               <div class="col-md-1 py-1 px-lg-1"></div>
               
-              <div class="rounded col-md-3 py-2 px-lg-2 bg-danger text-white">
-                <p class="text-center">Gastos<br>R$ {{ formatar(gastos) }}</p>
+              <div class="rounded col-md-3 py-1 px-lg-2 bg-danger text-white">
+                <p class="text-center font-weight-bold">Gastos<br>R$ {{ formatar(usuario.gastos) }}</p>
               </div>
 
             </div>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { endpoints } from "../conexaoApi"
+
 export default {
   name: "SaldoMes",
   props: {
@@ -50,14 +52,19 @@ export default {
   },
   data() {
     return {
-      saldo: 400.6,
-      gastos: 25.0,
-      opcoes_usuario: false
+      saldo: 0,
+      gastos: 0,
+      opcoes_usuario: false,
+      usuario: {}
     };
   },
   methods: {
     formatar: function(valor) {
-      return valor.toFixed(2)
+      try {
+        return parseFloat(valor).toFixed(2)
+      } catch {
+        return 0
+      }
     },
     esconde_opcoes: function() {
       if (this.opcoes_menu) {
@@ -65,6 +72,11 @@ export default {
         this.opcoes_menu = false;
       }
     }
+  },
+  created: async function () {
+    const email = localStorage.email;
+    const response = await fetch(endpoints.usuario + email);
+    this.usuario = await response.json();
   }
 };
 </script>
@@ -73,6 +85,7 @@ export default {
 <style scoped>
 .margem {
   margin: 60px;
+  margin-left: 160px;
 }
 
 p {

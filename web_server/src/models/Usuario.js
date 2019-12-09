@@ -17,6 +17,14 @@ const UsuarioSchema = new mongoose.Schema ({
 		type: String,
 		required: true,
     },
+    saldo: {
+    	type: Number,
+    	required: true,
+    },
+    gastos: {
+    	type: Number,
+    	required: true,
+    },
     receitas: {
     	type: Array,
     	required: true,

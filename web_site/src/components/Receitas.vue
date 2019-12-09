@@ -5,7 +5,7 @@
        
       <h3 class="text-center text-success font-weight-bold text-uppercase">RECEITAS</h3>
       
-      <div class="margem-tabela">
+      <div v-if="exibe_receitas" class="margem-tabela">
         <div class="table-responsive">
             <table class="table table-fixed text-center">
                 <thead>
@@ -18,27 +18,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="coisa in coisas" :key="coisa.id">
-                        <td class="col-2">1</td>
-                        <td class="col-3">Mark</td>
-                        <td class="col-2">Otto</td>
-                        <td class="col-2">@mdo</td>
+                    <tr v-for="receita in usuario.receitas" :key="receita.id">
+                        <td class="col-2">{{ receita.data }}</td>
+                        <td class="col-3">{{ receita.nome }}</td>
+                        <td class="col-2">{{ receita.categoria }}</td>
+                        <td class="col-2">{{ receita.valor }}</td>
                         <td class="col-3">
                           <div class="d-flex justify-content-center">
                             <div class="col-md-2">
-                              <a href="#" ><img src="../assets/editar.svg" v-on:click="edit_receita=!edit_receita"/></a>
+                              <img src="../assets/editar.svg" v-on:click="() => carrega_editar_receita(receita.id)"/>
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
-                              <a href="#"><img src="../assets/deletar.svg" /></a>
+                              <img src="../assets/deletar.svg" />
                             </div>
                           </div>
-
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+      </div>
+      <div v-else>
+        <h5 class="text-center font-weight-bold">Nenhuma receita cadastrada!<br>Clique no botão abaixo para adicionar uma receita.</h5>
       </div>
       <div class="d-flex flex-row-reverse align-items-stretch">
         <div class="p-4">
@@ -53,29 +55,41 @@
         <h3 class="font-weight-bold d-flex justify-content-center">EDITAR RECEITA</h3>
         <br>
         <div class="d-flex justify-content-center">
-          <form>
+          <div>
             <div class="form-group">
-              <input type="text" class="form-control col-12" placeholder="Nome" v-model="nome_receita">
+              <input 
+                type="text" 
+                class="form-control col-12" 
+                placeholder="Nome" 
+                v-model="nome_receita"
+              />
             </div>
             <div class="form-group">
-              <input type="date" class="form-control col-12" v-model="data_pagamento">
+              <input 
+                type="date" 
+                class="form-control col-12" 
+                v-model="data_receita"
+              />
             </div>
             <div class="form-group">
-              <input type="text" class="form-control col-12" placeholder="Valor" v-model="valor">
+              <input 
+                type="text" 
+                class="form-control col-12" 
+                placeholder="Valor" 
+                v-model="valor_receita"
+              />
             </div>
             <div class="form-group">
-              <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria">
+              <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria_receita">
                 <option value="" selected disabled hidden>Escolha uma categoria</option>
-                <option value="1">Contas</option>
-                <option value="2">Emprestimo</option>
-                <option value="3">Internet</option>
+								<option v-for="cat in usuario.categorias_receitas" :key="cat.nome" :value="cat.nome">{{ cat.nome }}</option>
               </select>
-            </div>        
+            </div>
             <div class="d-flex justify-content-center">
               <button class="btn btn-danger" v-on:click="edit_receita=!edit_receita">CANCELAR</button>
-              <button class="btn btn-primary">CRIAR</button>
+              <button class="btn btn-primary">EDITAR</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -86,25 +100,37 @@
         <div class="d-flex justify-content-center">
           <form>
             <div class="form-group">
-              <input type="text" class="form-control col-12" placeholder="Nome" v-model="nome_receita">
+              <input 
+                type="text" 
+                class="form-control col-12" 
+                placeholder="Nome" 
+                v-model="nome_receita"
+              />
             </div>
             <div class="form-group">
-              <input type="date" class="form-control col-12" v-model="data_pagamento">
+              <input 
+                type="date" 
+                class="form-control col-12" 
+                v-model="data_receita"
+              />
             </div>
             <div class="form-group">
-              <input type="text" class="form-control col-12" placeholder="Valor" v-model="valor">
+              <input 
+                type="text" 
+                class="form-control col-12" 
+                placeholder="Valor" 
+                v-model="valor_receita"
+              />
             </div>
             <div class="form-group">
-              <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria">
+              <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria_receita">
                 <option value="" selected disabled hidden>Escolha uma categoria</option>
-                <option value="1">Contas</option>
-                <option value="2">Emprestimo</option>
-                <option value="3">Internet</option>
+								<option v-for="cat in usuario.categorias_receitas" :key="cat.nome" :value="cat.nome">{{ cat.nome }}</option>
               </select>
             </div>        
             <div class="d-flex justify-content-center">
               <button class="btn btn-danger" v-on:click="add_receita=!add_receita">CANCELAR</button>
-              <button class="btn btn-primary">CRIAR</button>
+              <button class="btn btn-primary" v-on:click="adicionar_receita">CRIAR</button>
             </div>
           </form>
         </div>
@@ -115,6 +141,9 @@
 </template>
 
 <script>
+
+import { endpoints } from "../conexaoApi"
+
 export default {
   name: "Ganhos",
   props: {
@@ -122,25 +151,20 @@ export default {
   },
   data() {
     return {
-      coisas: [
-        {id: 1},
-        {id: 0},
-        {id: 2},
-        {id: 3},
-        {id: 4},
-        {id: 5},
-        {id: 6},
-        {id: 7},
-        {id: 8},
-        {id: 9},
-        {id: 10}
-      ],
       add_receita: false,
       edit_receita:false,
       data:null,
       nome:null,
       catecoria:null,
       valor:null,
+      usuario: undefined,
+
+      exibe_receitas: false,
+
+      nome_receita: null,
+      data_receita: null,
+      valor_receita: null,
+      categoria_receita: null,
     };
   },
   methods: {
@@ -152,7 +176,45 @@ export default {
         this.botao_menu = true;
         this.opcoes_menu = false;
       }
+    },
+    adicionar_receita: async function () {
+      const response = await fetch(endpoints.receitas + this.usuario.email, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify ({
+          nome: this.nome_receita,
+          data: this.data_receita,
+          valor: this.valor_receita,
+          categoria: this.categoria_receita
+        })
+      })
+      
+      this.usuario = await response.json();
+      
+      if (await response != undefined) {
+        this.add_receita = !this.add_receita
+      }
+    },
+    carrega_editar_receita: async function (receita) {
+      const index = this.usuario.receitas.findIndex(obj => obj.id === receita);
+
+      this.nome_receita = this.usuario.receitas[index].nome
+      this.data_receita = this.usuario.receitas[index].data
+      this.valor_receita = this.usuario.receitas[index].valor
+      this.categoria_receita = this.usuario.receitas[index].categoria
+      
+      this.edit_receita=!this.edit_receita;
     }
+  },
+  created: async function () {
+    const email = localStorage.email;
+    const response = await fetch(endpoints.usuario + email);
+    this.usuario = await response.json();
+    if (this.usuario.receitas.length > 0) this.exibe_receitas = true;
+
   }
 };
 </script>
@@ -161,6 +223,7 @@ export default {
 <style scoped>
 .margem {
   margin: 60px;
+  margin-left: 160px;
   padding: 60px;
 }
 .margem-tabela {
@@ -178,8 +241,11 @@ a {
 img {
   height: 30px;
   width: 30px;
+  cursor: pointer;
 }
-
+h5 {
+  margin: 200px;
+}
 .add-receita-botao {
   width: 60px;
   height: 60px;

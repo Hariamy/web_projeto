@@ -158,6 +158,7 @@ export default {
 <style scoped>
 .margem {
   margin: 60px;
+  margin-left: 160px;
   padding: 60px;
 }
 

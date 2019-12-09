@@ -1,6 +1,7 @@
 <template>
-  <div class="menuLogin float-md-right vh-100 d-flex flex-column justify-content-center">
-    <h3 class="text-center">Formulário de Cadastro</h3>
+  
+  <div v-if="cadastrar" class="menuLogin float-md-right vh-100 d-flex flex-column justify-content-center">
+    <h3 class="text-center text-width-bold">Criar uma nova conta</h3>
 
     <form class="d-flex justify-content-center flex-column">
       <div class="form-group image-upload d-flex justify-content-center">
@@ -8,10 +9,26 @@
           <img src="../assets/person.svg" alt="Foto de Perfil" />
         </label>
 
-        <input id="file-input" type="file" accept="image/*" name="foto" />
+        <input 
+          id="file-input" 
+          type="file" 
+          accept="image/*" 
+          name="foto" 
+        />
+      </div>
+      <div class="form-group">
+        <input 
+          v-model="nome"
+          type="text" 
+          class="form-control" 
+          id="InputNome" 
+          placeholder="Nome" 
+          name="nome" 
+        />
       </div>
       <div class="form-group">
         <input
+          v-model="email"
           type="email"
           class="form-control"
           id="InputEmail1"
@@ -21,10 +38,8 @@
         />
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" id="InputNome" placeholder="Nome" name="nome" />
-      </div>
-      <div class="form-group">
         <input
+          v-model="senha"
           type="password"
           class="form-control"
           id="InputPassword"
@@ -34,6 +49,7 @@
       </div>
       <div class="form-group">
         <input
+          v-model="confirmar_senha"
           type="password"
           class="form-control"
           id="confirmaPassword"
@@ -42,7 +58,7 @@
         />
       </div>
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-primary">Criar Conta</button>
+        <button type="button" class="btn btn-primary" v-on:click="criarConta">Criar Conta</button>
       </div>
     </form>
     <div class="d-flex justify-content-center">
@@ -54,11 +70,62 @@
       <router-link class="text-white" to='/'>Realizar Login</router-link>
     </div>
   </div>
+  <div v-else  class="menuLogin float-md-right vh-100 d-flex flex-column justify-content-center">
+    <h1 class="text-white text-center font-weight-bold">Usuário cadastrado com sucesso!</h1>      
+    <router-link class="text-white text-center" to='/'>Realizar Login</router-link>
+  </div>
 </template>
 
 <script>
+
+import { endpoints } from "../conexaoApi"
+
 export default {
-  name: "Login"
+  name: "Cadastrar",
+  data() {
+    return {
+      email: "",
+      nome: "",
+      senha: "",
+      confirmar_senha: "",
+      cadastrar: true
+    }
+  },
+  methods: {
+    criarConta: async function () {
+      const response = await fetch( endpoints.usuario, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify ({
+          nome: this.nome,
+          email: this.email,
+          senha: this.senha,
+          saldo: 0,
+          gastos: 0,
+          categorias_receitas: [
+            { nome: "Salário", cor: "#00ff00" }
+          ],
+          categorias_despesas: [
+            { nome: "Contas", cor: "#ff0000" }
+          ]
+        })
+      });
+
+      if (await response != undefined) {
+        this.email = "";
+        this.nome = "";
+        this.senha = "";
+        this.confirmar_senha = "";
+        this.cadastrar = false;
+      }
+    }
+  },
+  mounted: function () {
+    this.cadastrar = true;
+  }
 };
 </script>
 

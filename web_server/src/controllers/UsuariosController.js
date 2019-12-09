@@ -29,7 +29,7 @@ module.exports = {
 	},
 	
 	async editar(req, res) {
-		const usuario = await Usuario.findOneAndUpdate(req.params.id, req.body, { new: true, useFindAndModify: false });
+		const usuario = await Usuario.findByIdAndUpdate(req.params.id, req.body, { new: true, useFindAndModify: false });
 		
 		return res.json(usuario);
 	},
@@ -44,7 +44,7 @@ module.exports = {
 		try {
 			req.body.id = Date.now().toString();
 
-			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { receitas: req.body }}, { new: true, useFindAndModify: false });
+			const usuario = await Usuario.findByIdAndUpdate(req.params.id, { $push: { receitas: req.body }}, { new: true, useFindAndModify: false });
 
 			return res.json(usuario)
 
@@ -65,7 +65,7 @@ module.exports = {
 
 				const update = { receitas };
 
-				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+				const up_usuario = await Usuario.findByIdAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
 
 				return res.json(up_usuario);
 
@@ -82,7 +82,7 @@ module.exports = {
 		try {
 			req.body.id = Date.now().toString();
 
-			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { categorias_receitas: req.body }}, { new: true, useFindAndModify: false });
+			const usuario = await Usuario.findByIdAndUpdate(req.params.id, { $push: { categorias_receitas: req.body }}, { new: true, useFindAndModify: false });
 
 			return res.json(usuario)
 
@@ -103,7 +103,7 @@ module.exports = {
 
 				const update = { categorias_despesas };
 				
-				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+				const up_usuario = await Usuario.findByIdAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
 
 				return res.json(up_usuario);
 
@@ -121,7 +121,7 @@ module.exports = {
 		try {
 			req.body.id = Date.now().toString();
 
-			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { despesas: req.body }}, { new: true, useFindAndModify: false });
+			const usuario = await Usuario.findByIdAndUpdate(req.params.id, { $push: { despesas: req.body }}, { new: true, useFindAndModify: false });
 
 			return res.json(usuario)
 
@@ -142,7 +142,7 @@ module.exports = {
 
 				const update = { despesas };
 				
-				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+				const up_usuario = await Usuario.findByIdAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
 
 				return res.json(up_usuario);
 
@@ -159,7 +159,7 @@ module.exports = {
 		try {
 			req.body.id = Date.now().toString();
 
-			const usuario = await Usuario.findOneAndUpdate(req.params.id, { $push: { categorias_despesas: req.body }}, { new: true, useFindAndModify: false });
+			const usuario = await Usuario.findByIdAndUpdate(req.params.id, { $push: { categorias_despesas: req.body }}, { new: true, useFindAndModify: false });
 
 			return res.json(usuario)
 
@@ -180,7 +180,7 @@ module.exports = {
 
 				const update = { categorias_despesas };
 				
-				const up_usuario = await Usuario.findOneAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
+				const up_usuario = await Usuario.findByIdAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
 
 				return res.json(up_usuario);
 

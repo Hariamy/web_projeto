@@ -64,8 +64,10 @@
 </template>
 
 <script>
-import GraficoBarra from './GraficoBarra'
-import GraficoLinha from './GraficoLinha'
+import GraficoBarra from './GraficoBarra';
+import GraficoLinha from './GraficoLinha';
+
+import { endpoints } from "../conexaoApi";
 
 export default {
   name: "GraficoMeses",
@@ -75,6 +77,7 @@ export default {
   },
   data() {
     return {
+      usuario: undefined,
       
     };
   },
@@ -88,6 +91,10 @@ export default {
         this.opcoes_menu = false;
       }
     }
+  },
+  mounted: async function () {
+    const email = localStorage.email;
+    this.usuario = await fetch(endpoints.usuario + email);
   }
 };
 </script>
@@ -96,6 +103,7 @@ export default {
 <style scoped>
 .margem {
   margin: 60px;
+  margin-left: 160px;
   padding: 60px;
 }
 </style>

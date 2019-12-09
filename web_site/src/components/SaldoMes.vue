@@ -36,14 +36,14 @@
 
       <div class="opcoes-usuario shadow border border-info rounded" v-show="opcoes_usuario" v-on:mouseleave="opcoes_usuario=false">
         <p class="botao-usuario">Configurações</p>
-        <p class="botao-usuario">Sair</p>
+        <p class="botao-usuario" v-on:click="logout">Sair</p>
       </div>
     </div>
 </div>
 </template>
 
 <script>
-import { endpoints } from "../conexaoApi"
+import { endpoints } from "../rotasAPI"
 
 export default {
   name: "SaldoMes",
@@ -71,6 +71,10 @@ export default {
         this.botao_menu = true;
         this.opcoes_menu = false;
       }
+    },
+    logout: function () {
+      localStorage.clear();
+      this.$router.push('/')
     }
   },
   created: async function () {

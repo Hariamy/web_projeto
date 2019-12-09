@@ -46,7 +46,7 @@
 
 <script>
 
-import { endpoints } from "../conexaoApi"
+import { endpoints } from "../rotasAPI"
 
 export default {
   name: "Login",

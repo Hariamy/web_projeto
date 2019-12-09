@@ -67,7 +67,7 @@
 import GraficoBarra from './GraficoBarra';
 import GraficoLinha from './GraficoLinha';
 
-import { endpoints } from "../conexaoApi";
+import { endpoints } from "../rotasAPI";
 
 export default {
   name: "GraficoMeses",

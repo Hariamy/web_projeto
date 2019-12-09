@@ -86,8 +86,8 @@
               </select>
             </div>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-danger" v-on:click="edit_receita=!edit_receita">CANCELAR</button>
-              <button class="btn btn-primary">EDITAR</button>
+              <button class="btn btn-danger" v-on:click="() => { limpar_campos(); edit_receita=!edit_receita }">CANCELAR</button>
+              <button class="btn btn-primary" v-on:click="salvar_editar_receita">EDITAR</button>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
         <h3 class="font-weight-bold d-flex justify-content-center">INSERIR RECEITAS</h3>
         <br>
         <div class="d-flex justify-content-center">
-          <form>
+          <div>
             <div class="form-group">
               <input 
                 type="text" 
@@ -129,10 +129,10 @@
               </select>
             </div>        
             <div class="d-flex justify-content-center">
-              <button class="btn btn-danger" v-on:click="add_receita=!add_receita">CANCELAR</button>
+              <button class="btn btn-danger" v-on:click="() => { limpar_campos(); add_receita=!add_receita }">CANCELAR</button>
               <button class="btn btn-primary" v-on:click="adicionar_receita">CRIAR</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -142,7 +142,7 @@
 
 <script>
 
-import { endpoints } from "../conexaoApi"
+import { endpoints } from "../rotasAPI"
 
 export default {
   name: "Ganhos",
@@ -152,7 +152,7 @@ export default {
   data() {
     return {
       add_receita: false,
-      edit_receita:false,
+      edit_receita: false,
       data:null,
       nome:null,
       catecoria:null,
@@ -165,6 +165,7 @@ export default {
       data_receita: null,
       valor_receita: null,
       categoria_receita: null,
+      id_receita: null,
     };
   },
   methods: {
@@ -176,6 +177,12 @@ export default {
         this.botao_menu = true;
         this.opcoes_menu = false;
       }
+    },
+    limpar_campos: function () {
+      this.nome_receita = "";
+      this.data_receita = "";
+      this.valor_receita = "";
+      this.categoria_receita = "";
     },
     adicionar_receita: async function () {
       const response = await fetch(endpoints.receitas + this.usuario.email, {
@@ -205,8 +212,31 @@ export default {
       this.data_receita = this.usuario.receitas[index].data
       this.valor_receita = this.usuario.receitas[index].valor
       this.categoria_receita = this.usuario.receitas[index].categoria
+      this.id_receita = this.usuario.receitas[index].id
       
       this.edit_receita=!this.edit_receita;
+    },
+    salvar_editar_receita: async function () {
+      const response = await fetch(endpoints.receitas_editar + this.usuario.email, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify ({
+          id: this.id_receita,
+          nome: this.nome_receita,
+          data: this.data_receita,
+          valor: this.valor_receita,
+          categoria: this.categoria_receita
+        })
+      })
+      
+      this.usuario = await response.json();
+      
+      if (await response != undefined) {
+        this.edit_receita = !this.edit_receita
+      }
     }
   },
   created: async function () {

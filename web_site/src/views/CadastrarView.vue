@@ -10,7 +10,7 @@
 import Cadastrar from '../components/Cadastrar'
 
 export default {
-  name: "cadastrar",
+  name: "CadastrarView",
   components: {
     Cadastrar
   }

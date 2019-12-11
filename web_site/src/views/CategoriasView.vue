@@ -22,9 +22,8 @@ import SaldoMes from '../components/SaldoMes.vue'
 import Categorias from '../components/Categorias'
 
 export default {
-  name: 'HelloWorld',
+  name: 'CategoriasView',
   props: {
-    msg: String
   },
   components: {
     Menu,

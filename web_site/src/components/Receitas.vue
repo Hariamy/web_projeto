@@ -22,15 +22,15 @@
                         <td class="col-2">{{ receita.data }}</td>
                         <td class="col-3">{{ receita.nome }}</td>
                         <td class="col-2">{{ receita.categoria }}</td>
-                        <td class="col-2">{{ receita.valor }}</td>
+                        <td class="col-2">{{ formatar(receita.valor) }}</td>
                         <td class="col-3">
                           <div class="d-flex justify-content-center">
                             <div class="col-md-2">
-                              <img src="../assets/editar.svg" v-on:click="() => carrega_editar_receita(receita.id)"/>
+                              <img src="../assets/editar.svg" v-on:click="() => { seleciona_receita(receita.id); edit_receita=!edit_receita; }"/>
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
-                              <img src="../assets/deletar.svg" />
+                              <img src="../assets/deletar.svg" v-on:click="() => { seleciona_receita(receita.id); excluir_receita=!excluir_receita }"/>
                             </div>
                           </div>
                         </td>
@@ -48,8 +48,9 @@
         </div>
          <div class="p-4"></div>
       </div>
-
     </div>
+
+    <!--MODAL EDITAR RECEITA-->
     <div class="d-flex justify-content-center add-receita-externo" v-if="edit_receita">
       <div class="add-receita shadow rounded align-self-center">
         <h3 class="font-weight-bold d-flex justify-content-center">EDITAR RECEITA</h3>
@@ -87,12 +88,14 @@
             </div>
             <div class="d-flex justify-content-center">
               <button class="btn btn-danger" v-on:click="() => { limpar_campos(); edit_receita=!edit_receita }">CANCELAR</button>
-              <button class="btn btn-primary" v-on:click="salvar_editar_receita">EDITAR</button>
+              <button class="btn btn-primary" v-on:click="editar_receita">EDITAR</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!--MODAL EDITAR INSERIR-->
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
         <h3 class="font-weight-bold d-flex justify-content-center">INSERIR RECEITAS</h3>
@@ -136,6 +139,41 @@
         </div>
       </div>
     </div>
+
+    <!--MODAL EDITAR EXCLUIR-->
+    <div class="d-flex justify-content-center add-receita-externo" v-if="excluir_receita">
+      <div class="add-receita shadow rounded align-self-center">
+        <h3 class="font-weight-bold text-danger d-flex justify-content-center">EXCLUIR RECEITA</h3>
+        <br>
+          <table class="table text-center table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">ATRIBUTO</th>
+                <th scope="col">VALOR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="col">Nome</td>
+                <td scope="col">{{ nome_receita }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Data</td>
+                <td scope="col">{{ data_receita }}</td>
+              </tr>
+              <tr>
+                <td scope="col">Valor</td>
+                <td scope="col">{{ valor_receita }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" v-on:click="() => { limpar_campos(); excluir_receita=!excluir_receita }">CANCELAR</button>
+            <button class="btn btn-danger" v-on:click="remover_receita">DELETAR</button>
+          </div>
+      </div>
+    </div>
+
   </div>
 
 </template>
@@ -147,12 +185,13 @@ import { endpoints } from "../rotasAPI"
 export default {
   name: "Ganhos",
   props: {
-    mes: String
+    update: Function
   },
   data() {
     return {
       add_receita: false,
       edit_receita: false,
+      excluir_receita: false,
       data:null,
       nome:null,
       catecoria:null,
@@ -170,7 +209,11 @@ export default {
   },
   methods: {
     formatar: function(valor) {
-      return valor.toFixed(2)
+      try {
+        return parseFloat(valor).toFixed(2)
+      } catch {
+        return 0
+      }
     },
     esconde_opcoes: function() {
       if (this.opcoes_menu) {
@@ -202,10 +245,10 @@ export default {
       this.usuario = await response.json();
       
       if (await response != undefined) {
-        this.add_receita = !this.add_receita
+        this.add_receita = !this.add_receita;
       }
     },
-    carrega_editar_receita: async function (receita) {
+    seleciona_receita: async function (receita) {
       const index = this.usuario.receitas.findIndex(obj => obj.id === receita);
 
       this.nome_receita = this.usuario.receitas[index].nome
@@ -214,9 +257,8 @@ export default {
       this.categoria_receita = this.usuario.receitas[index].categoria
       this.id_receita = this.usuario.receitas[index].id
       
-      this.edit_receita=!this.edit_receita;
     },
-    salvar_editar_receita: async function () {
+    editar_receita: async function () {
       const response = await fetch(endpoints.receitas_editar + this.usuario.email, {
         method: 'PUT',
         headers: {
@@ -235,7 +277,18 @@ export default {
       this.usuario = await response.json();
       
       if (await response != undefined) {
-        this.edit_receita = !this.edit_receita
+        this.edit_receita = !this.edit_receita;
+      }
+    },
+    remover_receita: async function () {
+      const query = "?item_id=" + this.id_receita 
+      const response = await fetch(endpoints.receitas + this.usuario.email + query,  { method: 'DELETE'})
+      
+      this.usuario = await response.json();
+      
+      if (await response != undefined) {
+        this.excluir_receita = !this.excluir_receita;
+        this.limpar_campos();
       }
     }
   },

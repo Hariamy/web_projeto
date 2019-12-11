@@ -22,9 +22,9 @@ import SaldoMes from '../components/SaldoMes.vue'
 import Despesas from '../components/Despesas.vue'
 
 export default {
-  name: 'HelloWorld',
+  name: 'DespesasView',
   props: {
-    msg: String
+    
   },
   components: {
     Menu,

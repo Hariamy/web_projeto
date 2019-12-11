@@ -8,9 +8,11 @@
     />
     <SaldoMes
       mes="novembro"
+      v-bind:atualizar="refrash"
     />
 
-    <Receitas 
+    <Receitas
+      v-bind:update="update"
     />
 
   </div>
@@ -22,9 +24,8 @@ import SaldoMes from '../components/SaldoMes.vue'
 import Receitas from '../components/Receitas.vue'
 
 export default {
-  name: 'HelloWorld',
+  name: 'ReceitasView',
   props: {
-    msg: String
   },
   components: {
     Menu,
@@ -33,11 +34,13 @@ export default {
   },
   data() {
     return {
-      calcular: false,
+      refrash: false,
     }
   },
   methods: {
-   
+    update: function () {
+      this.refrash = !this.refrash
+    }
   }
 }
 </script>

@@ -16,13 +16,13 @@
             <div class="d-flex justify-content-center ">
 
               <div class="rounded col-md-3 py-1 px-lg-2 bg-success text-white">
-                <p class="text-center font-weight-bold">Saldo<br>R$ {{ formatar(usuario.saldo) }}</p>
+                <p class="text-center font-weight-bold">Saldo<br>R$ {{ formatar(saldo) }}</p>
               </div>
               
               <div class="col-md-1 py-1 px-lg-1"></div>
               
               <div class="rounded col-md-3 py-1 px-lg-2 bg-danger text-white">
-                <p class="text-center font-weight-bold">Gastos<br>R$ {{ formatar(usuario.gastos) }}</p>
+                <p class="text-center font-weight-bold">Gastos<br>R$ {{ formatar(gastos) }}</p>
               </div>
 
             </div>
@@ -48,7 +48,8 @@ import { endpoints } from "../rotasAPI"
 export default {
   name: "SaldoMes",
   props: {
-    mes: String
+    mes: String,
+    atualizar: Boolean
   },
   data() {
     return {
@@ -77,10 +78,19 @@ export default {
       this.$router.push('/')
     }
   },
+  updated: async function () {
+    const email = localStorage.email;
+    const response = await fetch(endpoints.usuario + email);
+    this.usuario = await response.json();
+    this.saldo = 0;
+    this.usuario.receitas.map(obj => {this.saldo += parseFloat(obj.valor) } )
+  },
   created: async function () {
     const email = localStorage.email;
     const response = await fetch(endpoints.usuario + email);
     this.usuario = await response.json();
+    this.saldo = 0;
+    this.usuario.receitas.map(obj => {this.saldo += parseFloat(obj.valor) } )
   }
 };
 </script>

@@ -21,9 +21,8 @@ import SaldoMes from '../components/SaldoMes.vue'
 import GraficosMeses from '../components/GraficosMeses'
 
 export default {
-  name: 'HelloWorld',
+  name: 'MesesView',
   props: {
-    msg: String
   },
   components: {
     Menu,

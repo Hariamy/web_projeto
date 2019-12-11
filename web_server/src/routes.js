@@ -26,5 +26,9 @@ routes.put('/categorias/receitas/editar/:id', UsuariosController.editar_categori
 
 
 routes.delete('/usuarios/:id', UsuariosController.remover);
+routes.delete('/receitas/:id', UsuariosController.remover_receita);
+routes.delete('/despesas/:id', UsuariosController.remover_despesa);
+routes.delete('/categorias/receitas/:id', UsuariosController.remover_categoria_receita);
+routes.delete('/categorias/despesas/:id', UsuariosController.remover_categoria_despesa);
 
 module.exports = routes;

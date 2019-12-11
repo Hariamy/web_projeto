@@ -95,7 +95,7 @@
       </div>
     </div>
 
-    <!--MODAL EDITAR INSERIR-->
+    <!--MODAL INSERIR-->
     <div class="d-flex justify-content-center add-receita-externo" v-if="add_receita">
       <div class="add-receita shadow rounded align-self-center">
         <h3 class="font-weight-bold d-flex justify-content-center">INSERIR RECEITAS</h3>
@@ -179,13 +179,11 @@
 </template>
 
 <script>
-
 import { endpoints } from "../rotasAPI"
 
 export default {
   name: "Ganhos",
   props: {
-    update: Function
   },
   data() {
     return {
@@ -194,7 +192,7 @@ export default {
       excluir_receita: false,
       data:null,
       nome:null,
-      catecoria:null,
+      categoria:null,
       valor:null,
       usuario: undefined,
 
@@ -242,12 +240,18 @@ export default {
         })
       })
       
-      this.usuario = await response.json();
       
       if (await response != undefined) {
+        this.usuario = await response.json();
+
+        if (this.usuario.receitas.length > 0) this.exibe_receitas = true;
+
         this.add_receita = !this.add_receita;
+        this.$parent.update();
+
       }
     },
+
     seleciona_receita: async function (receita) {
       const index = this.usuario.receitas.findIndex(obj => obj.id === receita);
 
@@ -255,9 +259,9 @@ export default {
       this.data_receita = this.usuario.receitas[index].data
       this.valor_receita = this.usuario.receitas[index].valor
       this.categoria_receita = this.usuario.receitas[index].categoria
-      this.id_receita = this.usuario.receitas[index].id
-      
+      this.id_receita = this.usuario.receitas[index].id      
     },
+
     editar_receita: async function () {
       const response = await fetch(endpoints.receitas_editar + this.usuario.email, {
         method: 'PUT',
@@ -278,26 +282,32 @@ export default {
       
       if (await response != undefined) {
         this.edit_receita = !this.edit_receita;
+        this.$parent.update();
       }
     },
+
     remover_receita: async function () {
       const query = "?item_id=" + this.id_receita 
       const response = await fetch(endpoints.receitas + this.usuario.email + query,  { method: 'DELETE'})
       
-      this.usuario = await response.json();
       
       if (await response != undefined) {
+        this.usuario = await response.json();
+        
+        if (this.usuario.receitas.length  == 0) this.exibe_receitas = false;
+
         this.excluir_receita = !this.excluir_receita;
         this.limpar_campos();
+        this.$parent.update();
       }
     }
   },
   created: async function () {
+    this.limpar_campos();
     const email = localStorage.email;
     const response = await fetch(endpoints.usuario + email);
     this.usuario = await response.json();
     if (this.usuario.receitas.length > 0) this.exibe_receitas = true;
-
   }
 };
 </script>
@@ -339,7 +349,6 @@ h5 {
 .add-receita {
   position: absolute;
   width: 600px;
-  height: 400px;
   background-color: white;
   padding: 20px;
   z-index: 99;

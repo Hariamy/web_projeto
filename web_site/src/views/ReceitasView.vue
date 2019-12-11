@@ -1,18 +1,14 @@
 <template>
   <div class="hello">
-    <Menu 
-      receitas="#"
-      despesas="#"
-      graficos="#"
-      categorias="#"
-    />
+    <Menu />
+
     <SaldoMes
       mes="novembro"
-      v-bind:atualizar="refrash"
+      v-bind:saldo="saldo"
+      v-bind:gastos="gastos"
     />
 
     <Receitas
-      v-bind:update="update"
     />
 
   </div>
@@ -22,6 +18,7 @@
 import Menu from '../components/Menu.vue'
 import SaldoMes from '../components/SaldoMes.vue'
 import Receitas from '../components/Receitas.vue'
+import { endpoints } from "../rotasAPI"
 
 export default {
   name: 'ReceitasView',
@@ -34,13 +31,27 @@ export default {
   },
   data() {
     return {
-      refrash: false,
+      saldo: 0,
+      gastos: 0,
+      usuario: undefined
     }
   },
   methods: {
-    update: function () {
-      this.refrash = !this.refrash
+    update: async function () {
+      const email = localStorage.email;
+
+      const response = await fetch(endpoints.usuario + email);
+      this.usuario = await response.json();
+      
+      this.saldo = 0;
+      this.usuario.receitas.map(obj => { this.saldo += parseFloat(obj.valor) } )
+      
+      this.gastos = 0;
+      this.usuario.despesas.map(obj => { this.gastos += parseFloat(obj.valor) } )
     }
+  },
+  created: async function () {
+    this.update();
   }
 }
 </script>

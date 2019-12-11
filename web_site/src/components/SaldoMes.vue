@@ -43,18 +43,16 @@
 </template>
 
 <script>
-import { endpoints } from "../rotasAPI"
 
 export default {
   name: "SaldoMes",
   props: {
     mes: String,
-    atualizar: Boolean
+    saldo: Number,
+    gastos: Number,
   },
   data() {
     return {
-      saldo: 0,
-      gastos: 0,
       opcoes_usuario: false,
       usuario: {}
     };
@@ -78,20 +76,8 @@ export default {
       this.$router.push('/')
     }
   },
-  updated: async function () {
-    const email = localStorage.email;
-    const response = await fetch(endpoints.usuario + email);
-    this.usuario = await response.json();
-    this.saldo = 0;
-    this.usuario.receitas.map(obj => {this.saldo += parseFloat(obj.valor) } )
-  },
-  created: async function () {
-    const email = localStorage.email;
-    const response = await fetch(endpoints.usuario + email);
-    this.usuario = await response.json();
-    this.saldo = 0;
-    this.usuario.receitas.map(obj => {this.saldo += parseFloat(obj.valor) } )
-  }
+  
+
 };
 </script>
 

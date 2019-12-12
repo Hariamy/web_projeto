@@ -1,7 +1,7 @@
 <template>
   <div class="grafico">
     <div id="chart">
-      <VueApexCharts type=bar height=350 :options="chartOptions" :series="series" />
+      <VueApexCharts type=bar height=300 :options="chartOptions" :series="series" />
     </div>
   </div>
 
@@ -46,7 +46,7 @@ export default {
         },
         yaxis: {
           title: {
-            text: '$ (thousands)'
+            text: 'R$'
           }
         },
         fill: {
@@ -56,7 +56,7 @@ export default {
         tooltip: {
           y: {
             formatter: function (val) {
-              return "$ " + val + " thousands"
+              return "R$ " + val
             }
           }
         }
@@ -81,7 +81,7 @@ export default {
 <style scoped>
 .grafico {
   width: 500px;
-  height: 400px;
+  height: 300px;
 }
 .margem {
   margin: 60px;

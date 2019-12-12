@@ -126,7 +126,7 @@ module.exports = {
 			if (index != undefined) {
 				categorias_receitas[index] = req.body
 
-				const update = { categorias_despesas };
+				const update = { categorias_receitas };
 				
 				const up_usuario = await Usuario.findByIdAndUpdate(req.params.id, update, { new: true, useFindAndModify: false});
 

@@ -21,7 +21,7 @@
                     <tr v-for="despesa in usuario.despesas" :key="despesa.id">
                         <td class="col-2">{{ despesa.data }}</td>
                         <td class="col-3">{{ despesa.nome }}</td>
-                        <td class="col-2">{{ despesa.categoria }}</td>
+                        <td class="col-2">{{ nome_categoria(despesa.categoria) }}</td>
                         <td class="col-2">{{ formatar(despesa.valor) }}</td>
                         <td class="col-3">
                           <div class="d-flex justify-content-center">
@@ -85,7 +85,7 @@
             <div class="form-group">
               <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria_despesa">
                 <option value="" selected disabled hidden>Escolha uma categoria</option>
-								<option v-for="cat in usuario.categorias_despesas" :key="cat.nome" :value="cat.nome">{{ cat.nome }}</option>
+								<option v-for="cat in usuario.categorias_despesas" :key="cat.id" :value="cat.id">{{ cat.nome }}</option>
               </select>
             </div>
             <div class="d-flex justify-content-center">
@@ -130,7 +130,7 @@
             <div class="form-group">
               <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria_despesa">
                 <option value="" selected disabled hidden>Escolha uma categoria</option>
-								<option v-for="cat in usuario.categorias_despesas" :key="cat.nome" :value="cat.nome">{{ cat.nome }}</option>
+								<option v-for="cat in usuario.categorias_despesas" :key="cat.id" :value="cat.id">{{ cat.nome }}</option>
               </select>
             </div>        
             <div class="d-flex justify-content-center">
@@ -211,6 +211,11 @@ export default {
       try {
         return parseFloat(valor).toFixed(2)
       } catch { return 0 }
+    },
+    nome_categoria: function (id) {
+      try {
+        return this.usuario.categorias_despesas.find(obj => id == obj.id).nome;
+      } catch { "" }
     },
     esconde_opcoes: function() {
       if (this.opcoes_menu) {

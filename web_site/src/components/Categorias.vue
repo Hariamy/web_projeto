@@ -62,11 +62,11 @@
                     <td class="col-4">
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
-                          <img src="../assets/editar.svg" v-on:click="() => { seleciona_categoria_despesa(categoria.id); edit_categorias_despesa=!edit_categorias_despesa; }"/>
+                          <img src="../assets/editar.svg" v-on:click="() => { seleciona_categoria_despesa(categoria.id); edit_categorias_despesa=true; }"/>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                          <img src="../assets/deletar.svg" v-on:click="() => { seleciona_categoria_despesa(categoria.id); excluir_categoria_despesa=!excluir_categoria_despesa }" />
+                          <img src="../assets/deletar.svg" v-on:click="() => { seleciona_categoria_despesa(categoria.id); excluir_categoria_despesa=true }" />
                         </div>
                       </div>
                     </td>
@@ -149,7 +149,7 @@
                 v-model="cor_categoria" />
             </div>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-danger" v-on:click="edit_categorias_despesa=!edit_categorias_despesa; ">CANCELAR</button>
+              <button class="btn btn-danger" v-on:click="edit_categorias_despesa=false; ">CANCELAR</button>
               <button class="btn btn-success" v-on:click="() => editar_categoria(false)">SALVAR EDIÇÃO</button>
             </div>
           </div>
@@ -246,7 +246,7 @@
             </tbody>
           </table>
           <div class="d-flex justify-content-center">
-            <button class="btn btn-primary" v-on:click="() => { limpar_campos(); excluir_categoria_despesa=!excluir_categoria_despesa }">CANCELAR</button>
+            <button class="btn btn-primary" v-on:click="() => { limpar_campos(); excluir_categoria_despesa=false }">CANCELAR</button>
             <button class="btn btn-danger" v-on:click="() => remover_categoria(false)">DELETAR</button>
           </div>
       </div>
@@ -363,13 +363,14 @@ export default {
         })
       })
       
+      this.edit_categorias_receita = false;
+      this.edit_categorias_despesa = false;
+      
       if (await response != undefined) {
         this.usuario = await response.json();
 
+        
         this.limpar_campos(); 
-
-        this.edit_categorias_receita = !this.edit_categorias_receita;
-        this.edit_categorias_despesa = !this.edit_categorias_despesa;
       }
     },
 
@@ -389,8 +390,8 @@ export default {
         
         this.limpar_campos();
         
-        this.excluir_categoria_receita = !this.excluir_categoria_receita;
-        this.excluir_categoria_despesa = !this.excluir_categoria_despesa;
+        this.excluir_categoria_receita = false;
+        this.excluir_categoria_despesa = false;
 
       }
     }
@@ -454,7 +455,6 @@ img {
 .add-receita {
   position: absolute;
   width: 600px;
-  height: 400px;
   background-color: white;
   padding: 20px;
   z-index: 99;

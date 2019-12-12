@@ -1,13 +1,11 @@
 <template>
   <div class="hello">
-    <Menu 
-      receitas="#"
-      despesas="#"
-      graficos="#"
-      categorias="#"
-    />
+    <Menu />
+
     <SaldoMes
       mes="novembro"
+      v-bind:saldo="saldo"
+      v-bind:gastos="gastos"
     />
 
     <GraficosMeses />
@@ -19,6 +17,7 @@
 import Menu from '../components/Menu.vue'
 import SaldoMes from '../components/SaldoMes.vue'
 import GraficosMeses from '../components/GraficosMeses'
+import { endpoints } from "../rotasAPI"
 
 export default {
   name: 'MesesView',
@@ -31,11 +30,27 @@ export default {
   },
   data() {
     return {
-      calcular: false,
+      saldo: 0,
+      gastos: 0,
+      usuario: undefined
     }
   },
   methods: {
-   
+    update: async function () {
+      const email = localStorage.email;
+
+      const response = await fetch(endpoints.usuario + email);
+      this.usuario = await response.json();
+      
+      this.saldo = 0;
+      this.usuario.receitas.map(obj => { this.saldo += parseFloat(obj.valor) } )
+      
+      this.gastos = 0;
+      this.usuario.despesas.map(obj => { this.gastos += parseFloat(obj.valor) } )
+    }
+  },
+  created: async function () {
+    this.update();
   }
 }
 </script>

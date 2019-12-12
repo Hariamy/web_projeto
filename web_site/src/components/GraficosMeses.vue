@@ -4,60 +4,44 @@
     <div class=" margem p-2 my-3 rounded shadow-sm border border-info">
       
       <h3 class="text-center text-info font-weight-bold text-uppercase">GRÁFICOS DOS ÚLTIMOS 4 MESES</h3>
-      <div class="d-flex">
+      <div v-if="usuario.despesas != [] || usuario.receitas != []" class="d-flex">
         <div class="p-2 align-self-center flex-fill d-flex justify-content-center">
           <GraficoLinha
             v-bind:series="[{
-                name: 'High - 2013',
-                data: [28, 29, 33, 36]
+                name: 'Receitas',
+                data: total_receitas
             }, {
-                name: 'Low - 2013',
-                data: [12, 11, 14, 18]
+                name: 'Despesas',
+                data: total_despesas
             }]"
-            v-bind:categories="['Feb', 'Mar', 'Apr', 'May']"
+            v-bind:categories="meses"
 
-            titulo="Ganhos"
+            titulo="GANHOS VS GASTOS"
           />
         </div>
         <div class="p-2 align-self-center flex-fill ">
           <div>
             <GraficoBarra
-              v-bind:series="[{
-                  name: 'Net Profit',
-                  data: [44, 55, 57, 56]
-              }, {
-                  name: 'Revenue',
-                  data: [76, 85, 101, 98]
-              }, {
-                  name: 'Free Cash Flow',
-                  data: [35, 41, 36, 26]
-              }]"
+              v-bind:series="receitas_categoria"
 
-              v-bind:categories="['Feb', 'Mar', 'Apr', 'May']"
-              titulo="Ganhos"
+              v-bind:categories="meses"
+              titulo="GANHOS POR CATEGORIA"
             />
           </div>
           <div>
             <GraficoBarra
-              v-bind:series="[{
-                  name: 'Net Profit',
-                  data: [44, 55, 57, 56]
-              }, {
-                  name: 'Revenue',
-                  data: [76, 85, 101, 98]
-              }, {
-                  name: 'Free Cash Flow',
-                  data: [35, 41, 36, 26]
-              }]"
+              v-bind:series="despesas_categoria"
 
-              v-bind:categories="['Feb', 'Mar', 'Apr', 'May']"
-              titulo="Ganhos"
+              v-bind:categories="meses"
+              titulo="GASTOS POR CATEGORIA"
             />
           </div>
         </div>
 
       </div>
-      
+      <div v-else>
+        <h5 class="text-center font-weight-bold">Nenhuma nenhuma receita ou despesa cadastrada!<br>Adicione informações para ver as informações.</h5>
+      </div>
     </div>
   </div>
 
@@ -66,8 +50,9 @@
 <script>
 import GraficoBarra from './GraficoBarra';
 import GraficoLinha from './GraficoLinha';
-
 import { endpoints } from "../rotasAPI";
+
+const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
 export default {
   name: "GraficoMeses",
@@ -78,7 +63,11 @@ export default {
   data() {
     return {
       usuario: undefined,
-      
+      meses: [0, 0, 0, 0],
+      total_receitas: [0, 0, 0, 0],
+      total_despesas: [0, 0, 0, 0],
+      receitas_categoria: [],
+      despesas_categoria: [],
     };
   },
   methods: {
@@ -90,11 +79,94 @@ export default {
         this.botao_menu = true;
         this.opcoes_menu = false;
       }
+    },
+    calcula_total_meses: function () {
+      const hoje = new Date();
+      var ano = hoje.getFullYear();
+      var mes = hoje.getMonth();
+
+      var indices = []
+      var cont = 3;
+
+      for (let i = 0; i < 4; i++) {
+        indices.unshift([mes, ano, cont])
+        
+        this.meses[cont] = meses[mes];
+        
+        cont -= 1;
+
+        ano = mes - 1 < 0 ? ano-1 : ano;
+        mes = mes - 1 < 0 ? 12 : mes - 1;
+      }
+
+      this.usuario.receitas.map(receita => {
+        const data = new Date(receita.data);
+        indices.map(obj => {
+          if (obj[0] == data.getMonth() && obj[1] == data.getFullYear()) {
+            this.total_receitas[obj[2]] += receita.valor;
+          }
+        })
+      });
+
+      this.usuario.despesas.map(despesa => {
+        const data = new Date(despesa.data);
+        indices.map(obj => {
+          if (obj[0] == data.getMonth() && obj[1] == data.getFullYear()) {
+            this.total_despesas[obj[2]] += despesa.valor;
+          }
+        })
+      });
+
+      this.usuario.categorias_receitas.map(categoria => {
+        const nome = categoria.nome;
+        const cat_id = categoria.id;
+        var valores = [0, 0, 0, 0];
+
+        this.usuario.receitas.map(receita => {
+          const data = new Date(receita.data);
+          const id = receita.categoria;
+          indices.map(obj => {
+            if (obj[0] == data.getMonth() && obj[1] == data.getFullYear() && id === cat_id) {
+              valores[obj[2]] += receita.valor;
+            }
+          })
+        });
+        this.receitas_categoria.push({
+          name: nome,
+          data: valores
+        })
+      });
+
+      this.usuario.categorias_despesas.map(categoria => {
+        const nome = categoria.nome;
+        const cat_id = categoria.id;
+        var valores = [0, 0, 0, 0];
+
+        this.usuario.despesas.map(receita => {
+          const data = new Date(receita.data);
+          const id = receita.categoria;
+          indices.map(obj => {
+            if (obj[0] == data.getMonth() && obj[1] == data.getFullYear() && id === cat_id) {
+              valores[obj[2]] += receita.valor;
+            }
+          })
+        });
+        this.despesas_categoria.push({
+          name: nome,
+          data: valores
+        })
+      })
+
     }
   },
-  mounted: async function () {
+  created: async function () {
     const email = localStorage.email;
-    this.usuario = await fetch(endpoints.usuario + email);
+    const response = await fetch(endpoints.usuario + email);
+
+    if (await response != undefined) {
+      this.usuario = await response.json();
+      this.calcula_total_meses();
+    }
   }
 };
 </script>

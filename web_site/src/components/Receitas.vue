@@ -21,7 +21,7 @@
                     <tr v-for="receita in usuario.receitas" :key="receita.id">
                         <td class="col-2">{{ receita.data }}</td>
                         <td class="col-3">{{ receita.nome }}</td>
-                        <td class="col-2">{{ receita.categoria }}</td>
+                        <td class="col-2">{{ nome_categoria(receita.categoria) }}</td>
                         <td class="col-2">{{ formatar(receita.valor) }}</td>
                         <td class="col-3">
                           <div class="d-flex justify-content-center">
@@ -83,7 +83,7 @@
             <div class="form-group">
               <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria_receita">
                 <option value="" selected disabled hidden>Escolha uma categoria</option>
-								<option v-for="cat in usuario.categorias_receitas" :key="cat.nome" :value="cat.nome">{{ cat.nome }}</option>
+								<option v-for="cat in usuario.categorias_receitas" :key="cat.id" :value="cat.id">{{ cat.nome }}</option>
               </select>
             </div>
             <div class="d-flex justify-content-center">
@@ -128,7 +128,7 @@
             <div class="form-group">
               <select class="custom-select col-12" id="inputGroupSelect01" v-model="categoria_receita">
                 <option value="" selected disabled hidden>Escolha uma categoria</option>
-								<option v-for="cat in usuario.categorias_receitas" :key="cat.nome" :value="cat.nome">{{ cat.nome }}</option>
+								<option v-for="cat in usuario.categorias_receitas" :key="cat.id" :value="cat.id">{{ cat.nome }}</option>
               </select>
             </div>        
             <div class="d-flex justify-content-center">
@@ -212,6 +212,11 @@ export default {
       } catch {
         return 0
       }
+    },
+    nome_categoria: function (id) {
+      try {
+        return this.usuario.categorias_receitas.find(obj => id == obj.id).nome;
+      } catch { "" }
     },
     esconde_opcoes: function() {
       if (this.opcoes_menu) {
@@ -372,10 +377,9 @@ h5 {
   cursor: pointer;
 }
 .table-fixed tbody {
-    height: 40vh;
-    overflow-y: auto;
-    width: 100%;
-    
+  height: 40vh;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .table-fixed thead,
@@ -389,7 +393,7 @@ h5 {
 .table-fixed tbody td,
 .table-fixed tbody th,
 .table-fixed thead > tr > th {
-    float: left;
-    position: relative;
+  float: left;
+  position: relative;
 }
 </style>

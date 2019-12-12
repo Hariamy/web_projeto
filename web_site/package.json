@@ -12,7 +12,9 @@
     "bootstrap": "^4.4.1",
     "core-js": "^3.4.3",
     "jquery": "^3.4.1",
+    "nodemailer": "^6.4.2",
     "popper.js": "^1.16.0",
+    "randomstring": "^1.1.5",
     "vue": "^2.6.10",
     "vue-apexcharts": "^1.5.1",
     "vue-router": "^3.1.3"

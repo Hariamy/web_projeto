@@ -8,6 +8,7 @@ import Receitas from './views/ReceitasView'
 import Categorias from './views/CategoriasView'
 import Despesas from './views/DespesasView'
 import GraficosMeses from './views/GraficosMesesView'
+import Verificar from './views/VerificarView'
 
 Vue.use(Router)
 
@@ -37,6 +38,10 @@ export default new Router({
       path: "/graficosMeses",
       name: "graficosMeses",
       component: GraficosMeses
+    }, {
+      path: "/verificar",
+      name: "verificar",
+      component: Verificar
     }
   ]
 })

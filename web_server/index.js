@@ -20,7 +20,7 @@ app.listen(porta);
 // admin
 // FdHB83x5Dz7pvlNM
 mongoose.connect(
-	'mongodb+srv://admin:FdHB83x5Dz7pvlNM@cluster0-lford.mongodb.net/db_gfin?retryWrites=true&w=majority',  
+	'mongodb://localhost:27017/web',  
 	{ useNewUrlParser: true, useUnifiedTopology: true },
     err => { return 1; }
 )

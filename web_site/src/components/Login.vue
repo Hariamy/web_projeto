@@ -63,7 +63,10 @@ export default {
       const response = await fetch( endpoints.usuario + this.email);
       const usuario = await response.json()
 
-      if (await usuario.senha === this.senha) {
+      if(!await usuario.verificado){
+        alert("Verifique o seu email")
+
+      }else if (await usuario.senha === this.senha) {
        
         localStorage.email = this.email;
    

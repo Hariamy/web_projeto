@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mailer = require('../email/mailer')
 
 const Usuario = mongoose.model('Usuario');
 
@@ -9,8 +10,29 @@ module.exports = {
 		return res.json(usuarios);
 	},
 
+	async enviarEmail(req,res){
+		const html = `Olá, obrigado por se registrar.
+        <br/>
+        Por favor, verifique o seu email colando o seguinte token:
+        <br/>
+        Token: <b>${req.body.token}</b>
+        <br/>
+        Na página seguinte:
+        <a href='http://localhost:8080/#/verificar'>http://localhost:8080/#/verificar</a>
+        `;
+
+        const response = await mailer.sendMail('admin@gfin.com','Verifique o seu email',req.body.email,html);
+        return res.json(response)
+	},
+
 	async buscarId(req, res) {
 		const usuario = await Usuario.findById(req.params.id);
+
+		return res.json(usuario);
+	},
+
+	async buscarToken(req, res) {
+		const usuario = await Usuario.findOne({token:req.params.token});
 
 		return res.json(usuario);
 	},

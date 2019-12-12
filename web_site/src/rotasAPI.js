@@ -3,6 +3,7 @@ const base_url = "https://gfinserver.herokuapp.com/api/"
 
 export const endpoints = {
     usuario: base_url + "usuarios/",
+    email: base_url + "usuarios/enviaremail",
     receitas: base_url + "receitas/",
     receitas_editar: base_url + "receitas/editar/",
     despesas: base_url + "despesas/",

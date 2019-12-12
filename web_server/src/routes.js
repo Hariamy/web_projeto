@@ -7,8 +7,10 @@ const UsuariosController = require('./controllers/UsuariosController');
 
 routes.get('/usuarios', UsuariosController.exibir);
 routes.get('/usuarios/:id', UsuariosController.buscarId);
+routes.get('/usuarios/:token', UsuariosController.buscarToken);
 
 routes.post('/usuarios', UsuariosController.criar);
+routes.post('/email', UsuariosController.enviarEmail);
 
 routes.put('/usuarios/:id', UsuariosController.editar);
 

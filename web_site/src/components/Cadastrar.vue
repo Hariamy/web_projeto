@@ -78,7 +78,8 @@
 
 <script>
 
-import { endpoints } from "../rotasAPI"
+import { endpoints } from "../rotasAPI";
+const randomstring = require('randomstring');
 
 export default {
   name: "Cadastrar",
@@ -93,6 +94,7 @@ export default {
   },
   methods: {
     criarConta: async function () {
+      const token = randomstring.generate();
       const response = await fetch( endpoints.usuario, {
         method: 'POST',
         headers: {
@@ -110,11 +112,25 @@ export default {
           ],
           categorias_despesas: [
             { nome: "Contas", cor: "#ff0000" }
-          ]
+          ],
+          token:token,
+          verificado:false
         })
       });
 
-      if (await response != undefined) {
+      const responseEmail = await fetch( endpoints.email, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify ({
+          token:token,
+          email:this.email
+        })
+      });
+
+      if (await response != undefined && await responseEmail.accepted.length > 0) {
         this.email = "";
         this.nome = "";
         this.senha = "";

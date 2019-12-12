@@ -40,7 +40,15 @@ const UsuarioSchema = new mongoose.Schema ({
     categorias_despesas: {
     	type: Array,
     	required: true,	
-    }
+    },
+    token: {
+        type: String,
+        required: true, 
+    },
+    verificado: {
+        type: Boolean,
+        required: true, 
+    },
     
 }, { collection: "usuario" });
 

@@ -1,7 +1,9 @@
 <template>
   <div class="ganhos">
     <div class="margem p-2 my-3 rounded shadow-sm border border-warning">
-      <h3 class="text-center text-warning font-weight-bold text-uppercase">CATEGORIA</h3>
+      <h3 class="text-center text-warning font-weight-bold text-uppercase">
+        CATEGORIA
+      </h3>
 
       <div class="d-flex">
         <div class="p-6 align-self-center flex-fill">
@@ -17,19 +19,43 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="categoria in usuario.categorias_receitas" :key="categoria.id">
+                  <tr
+                    v-for="categoria in usuario.categorias_receitas"
+                    :key="categoria.id"
+                  >
                     <td class="col-5">{{ categoria.nome }}</td>
                     <td class="col-2 d-flex justify-content-center">
-                      <div class="cor" v-bind:style="{ backgroundColor: categoria.cor }"></div>
+                      <div
+                        class="cor"
+                        v-bind:style="{ backgroundColor: categoria.cor }"
+                      ></div>
                     </td>
                     <td class="col-4">
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
-                          <img src="../assets/editar.svg" v-on:click="() => { seleciona_categoria_receita(categoria.id); edit_categorias_receita=!edit_categorias_receita; }"/>
+                          <img
+                            src="../assets/editar.svg"
+                            v-on:click="
+                              () => {
+                                seleciona_categoria_receita(categoria.id);
+                                edit_categorias_receita =
+                                  !edit_categorias_receita;
+                              }
+                            "
+                          />
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                          <img src="../assets/deletar.svg" v-on:click="() => { seleciona_categoria_receita(categoria.id); excluir_categoria_receita=!excluir_categoria_receita }" />
+                          <img
+                            src="../assets/deletar.svg"
+                            v-on:click="
+                              () => {
+                                seleciona_categoria_receita(categoria.id);
+                                excluir_categoria_receita =
+                                  !excluir_categoria_receita;
+                              }
+                            "
+                          />
                         </div>
                       </div>
                     </td>
@@ -38,7 +64,12 @@
               </table>
             </div>
           </div>
-          <div v-else><h6 class="text-center font-weight-bold">Nenhuma categoria de receita cadastrada!<br>Clique no botão abaixo para adicionar uma categoria de receita.</h6></div>
+          <div v-else>
+            <h6 class="text-center font-weight-bold">
+              Nenhuma categoria de receita cadastrada!<br />Clique no botão
+              abaixo para adicionar uma categoria de receita.
+            </h6>
+          </div>
         </div>
 
         <div class="p-6 align-self-center flex-fill">
@@ -54,19 +85,41 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="categoria in usuario.categorias_despesas" :key="categoria.id">
+                  <tr
+                    v-for="categoria in usuario.categorias_despesas"
+                    :key="categoria.id"
+                  >
                     <td class="col-5">{{ categoria.nome }}</td>
                     <td class="col-2 d-flex justify-content-center">
-                      <div class="cor" v-bind:style="{ backgroundColor: categoria.cor }"></div>
+                      <div
+                        class="cor"
+                        v-bind:style="{ backgroundColor: categoria.cor }"
+                      ></div>
                     </td>
                     <td class="col-4">
                       <div class="d-flex justify-content-center">
                         <div class="col-md-2">
-                          <img src="../assets/editar.svg" v-on:click="() => { seleciona_categoria_despesa(categoria.id); edit_categorias_despesa=true; }"/>
+                          <img
+                            src="../assets/editar.svg"
+                            v-on:click="
+                              () => {
+                                seleciona_categoria_despesa(categoria.id);
+                                edit_categorias_despesa = true;
+                              }
+                            "
+                          />
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                          <img src="../assets/deletar.svg" v-on:click="() => { seleciona_categoria_despesa(categoria.id); excluir_categoria_despesa=true }" />
+                          <img
+                            src="../assets/deletar.svg"
+                            v-on:click="
+                              () => {
+                                seleciona_categoria_despesa(categoria.id);
+                                excluir_categoria_despesa = true;
+                              }
+                            "
+                          />
                         </div>
                       </div>
                     </td>
@@ -75,7 +128,12 @@
               </table>
             </div>
           </div>
-          <div v-else><h6 class="text-center font-weight-bold">Nenhuma categoria de despesa cadastrada!<br>Clique no botão abaixo para adicionar uma categoria de despesa.</h6></div>
+          <div v-else>
+            <h6 class="text-center font-weight-bold">
+              Nenhuma categoria de despesa cadastrada!<br />Clique no botão
+              abaixo para adicionar uma categoria de despesa.
+            </h6>
+          </div>
         </div>
       </div>
 
@@ -83,7 +141,7 @@
         <div class="p-4">
           <img
             class="add-receita-botao"
-            v-on:click="add_categoria=!add_categoria"
+            v-on:click="add_categoria = !add_categoria"
             src="../assets/add_categoria.svg"
           />
         </div>
@@ -92,75 +150,14 @@
     </div>
 
     <!--EDITAR CATEGORIA RECEITA-->
-    <div class="d-flex justify-content-center add-receita-externo" v-if="edit_categorias_receita">
+    <div
+      class="d-flex justify-content-center add-receita-externo"
+      v-if="edit_categorias_receita"
+    >
       <div class="add-receita shadow rounded align-self-center">
-        <h3 class="font-weight-bold d-flex justify-content-center">EDITAR CATEGORIA</h3>
-        <br>
-        <div class="d-flex justify-content-center">
-          <div>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Nome"
-                v-model="nome_categoria"
-                id="nome-categoria"
-              />
-            </div>
-
-            <div class="form-group">
-              <input 
-                type="text" 
-                class="form-control" 
-                placeholder="#000000" 
-                v-model="cor_categoria" />
-            </div>
-            <div class="d-flex justify-content-center">
-              <button class="btn btn-danger" v-on:click="edit_categorias_receita=!edit_categorias_receita; ">CANCELAR</button>
-              <button class="btn btn-success" v-on:click="() => editar_categoria(true)">SALVAR EDIÇÃO</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--EDITAR CATEGORIA DESPESA-->
-    <div class="d-flex justify-content-center add-receita-externo" v-if="edit_categorias_despesa">
-      <div class="add-receita shadow rounded align-self-center">
-        <h3 class="font-weight-bold d-flex justify-content-center">EDITAR CATEGORIA</h3>
-        <br>
-        <div class="d-flex justify-content-center">
-          <div>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Nome"
-                v-model="nome_categoria"
-                id="nome-categoria"
-              />
-            </div>
-
-            <div class="form-group">
-              <input 
-                type="text" 
-                class="form-control" 
-                placeholder="#000000" 
-                v-model="cor_categoria" />
-            </div>
-            <div class="d-flex justify-content-center">
-              <button class="btn btn-danger" v-on:click="edit_categorias_despesa=false; ">CANCELAR</button>
-              <button class="btn btn-success" v-on:click="() => editar_categoria(false)">SALVAR EDIÇÃO</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--INSERIR CATEGORIA-->
-    <div class="d-flex justify-content-center add-receita-externo" v-if="add_categoria">
-      <div class="add-receita shadow rounded align-self-center">
-        <h3 class="font-weight-bold d-flex justify-content-center">INSERIR CATEGORIA</h3>
+        <h3 class="font-weight-bold d-flex justify-content-center">
+          EDITAR CATEGORIA
+        </h3>
         <br />
         <div class="d-flex justify-content-center">
           <div>
@@ -174,18 +171,149 @@
               />
             </div>
 
-            <div class="form-group justify-content-start">
-                <input type="text" class="form-control" placeholder="#000000" v-model="cor_categoria" />
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="#000000"
+                v-model="cor_categoria"
+              />
+            </div>
+            <div class="d-flex justify-content-center">
+              <button
+                class="btn btn-danger"
+                v-on:click="edit_categorias_receita = !edit_categorias_receita"
+              >
+                CANCELAR
+              </button>
+              <button
+                class="btn btn-success"
+                v-on:click="() => editar_categoria(true)"
+              >
+                SALVAR EDIÇÃO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--EDITAR CATEGORIA DESPESA-->
+    <div
+      class="d-flex justify-content-center add-receita-externo"
+      v-if="edit_categorias_despesa"
+    >
+      <div class="add-receita shadow rounded align-self-center">
+        <h3 class="font-weight-bold d-flex justify-content-center">
+          EDITAR CATEGORIA
+        </h3>
+        <br />
+        <div class="d-flex justify-content-center">
+          <div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nome"
+                v-model="nome_categoria"
+                id="nome-categoria"
+              />
             </div>
 
-            <div class="form-group justify-content-center">
-              <label class="radio"><input type="radio" v-model="tipo_categoria" value="receita" name="optradio" checked>Receita</label>
-              <label class="radio"><input type="radio" v-model="tipo_categoria" value="despesa" name="optradio">Despesa</label>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="#000000"
+                v-model="cor_categoria"
+              />
+            </div>
+            <div class="d-flex justify-content-center">
+              <button
+                class="btn btn-danger"
+                v-on:click="edit_categorias_despesa = false"
+              >
+                CANCELAR
+              </button>
+              <button
+                class="btn btn-success"
+                v-on:click="() => editar_categoria(false)"
+              >
+                SALVAR EDIÇÃO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--INSERIR CATEGORIA-->
+    <div
+      class="d-flex justify-content-center add-receita-externo"
+      v-if="add_categoria"
+    >
+      <div class="add-receita shadow rounded align-self-center">
+        <h3 class="font-weight-bold d-flex justify-content-center">
+          INSERIR CATEGORIA
+        </h3>
+        <br />
+        <div class="d-flex justify-content-center">
+          <div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nome"
+                v-model="nome_categoria"
+                id="nome-categoria"
+              />
+            </div>
+
+            <div class="form-group">
+              <input
+                type="color"
+                class="form-control"
+                placeholder="#000000"
+                v-model="cor_categoria"
+              />
+            </div>
+
+            <div class="form-group d-flex justify-content-center">
+              <label class="radio"
+                ><input
+                  type="radio"
+                  v-model="tipo_categoria"
+                  value="receita"
+                  name="optradio"
+                  checked
+                />Receita</label
+              >
+              <label class="radio"
+                ><input
+                  type="radio"
+                  v-model="tipo_categoria"
+                  value="despesa"
+                  name="optradio"
+                />Despesa</label
+              >
             </div>
 
             <div class="d-flex justify-content-center">
-              <button class="btn btn-danger" v-on:click="limpar_campos(); add_categoria=!add_categoria">CANCELAR</button>
-              <button class="btn btn-success" v-on:click="adicionar_categoria()">CRIAR</button>
+              <button
+                class="btn btn-danger"
+                v-on:click="
+                  limpar_campos();
+                  add_categoria = !add_categoria;
+                "
+              >
+                CANCELAR
+              </button>
+              <button
+                class="btn btn-success"
+                v-on:click="adicionar_categoria()"
+              >
+                CRIAR
+              </button>
             </div>
           </div>
         </div>
@@ -193,74 +321,123 @@
     </div>
 
     <!--MODAL EDITAR EXCLUIR-->
-    <div class="d-flex justify-content-center add-receita-externo" v-if="excluir_categoria_receita">
+    <div
+      class="d-flex justify-content-center add-receita-externo"
+      v-if="excluir_categoria_receita"
+    >
       <div class="add-receita shadow rounded align-self-center">
-        <h3 class="font-weight-bold text-danger d-flex justify-content-center">EXCLUIR CATEGORIA</h3>
-        <br>
-          <table class="table text-center table-sm">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">ATRIBUTO</th>
-                <th scope="col">VALOR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td scope="col">Nome</td>
-                <td scope="col">{{ nome_categoria }}</td>
-              </tr>
-              <tr>
-                <td scope="col">Cor</td>
-                <td scope="col"> <div class="cor" v-bind:style="{ backgroundColor: cor_categoria }"></div></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="d-flex justify-content-center">
-            <button class="btn btn-primary" v-on:click="() => { limpar_campos(); excluir_categoria_receita=!excluir_categoria_receita }">CANCELAR</button>
-            <button class="btn btn-danger" v-on:click="() => remover_categoria(true)">DELETAR</button>
-          </div>
+        <h3 class="font-weight-bold text-danger d-flex justify-content-center">
+          EXCLUIR CATEGORIA
+        </h3>
+        <br />
+        <table class="table text-center table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ATRIBUTO</th>
+              <th scope="col">VALOR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="col">Nome</td>
+              <td scope="col">{{ nome_categoria }}</td>
+            </tr>
+            <tr>
+              <td scope="col">Cor</td>
+              <td scope="col">
+                <div
+                  class="cor"
+                  v-bind:style="{ backgroundColor: cor_categoria }"
+                ></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+          <button
+            class="btn btn-primary"
+            v-on:click="
+              () => {
+                limpar_campos();
+                excluir_categoria_receita = !excluir_categoria_receita;
+              }
+            "
+          >
+            CANCELAR
+          </button>
+          <button
+            class="btn btn-danger"
+            v-on:click="() => remover_categoria(true)"
+          >
+            DELETAR
+          </button>
+        </div>
       </div>
     </div>
 
     <!--MODAL EDITAR EXCLUIR-->
-    <div class="d-flex justify-content-center add-receita-externo" v-if="excluir_categoria_despesa">
+    <div
+      class="d-flex justify-content-center add-receita-externo"
+      v-if="excluir_categoria_despesa"
+    >
       <div class="add-receita shadow rounded align-self-center">
-        <h3 class="font-weight-bold text-danger d-flex justify-content-center">EXCLUIR CATEGORIA</h3>
-        <br>
-          <table class="table text-center table-sm">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">ATRIBUTO</th>
-                <th scope="col">VALOR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td scope="col">Nome</td>
-                <td scope="col">{{ nome_categoria }}</td>
-              </tr>
-              <tr>
-                <td scope="col">Cor</td>
-                <td scope="col"> <div class="cor" v-bind:style="{ backgroundColor: cor_categoria }"></div></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="d-flex justify-content-center">
-            <button class="btn btn-primary" v-on:click="() => { limpar_campos(); excluir_categoria_despesa=false }">CANCELAR</button>
-            <button class="btn btn-danger" v-on:click="() => remover_categoria(false)">DELETAR</button>
-          </div>
+        <h3 class="font-weight-bold text-danger d-flex justify-content-center">
+          EXCLUIR CATEGORIA
+        </h3>
+        <br />
+        <table class="table text-center table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ATRIBUTO</th>
+              <th scope="col">VALOR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="col">Nome</td>
+              <td scope="col">{{ nome_categoria }}</td>
+            </tr>
+            <tr>
+              <td scope="col">Cor</td>
+              <td scope="col">
+                <div
+                  class="cor"
+                  v-bind:style="{ backgroundColor: cor_categoria }"
+                ></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+          <button
+            class="btn btn-primary"
+            v-on:click="
+              () => {
+                limpar_campos();
+                excluir_categoria_despesa = false;
+              }
+            "
+          >
+            CANCELAR
+          </button>
+          <button
+            class="btn btn-danger"
+            v-on:click="() => remover_categoria(false)"
+          >
+            DELETAR
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { endpoints } from "../rotasAPI"
+import { endpoints } from "../rotasAPI";
 
 export default {
   name: "Categoria",
-  props: {
-  },
+  props: {},
   data() {
     return {
       add_categoria: false,
@@ -268,7 +445,7 @@ export default {
       edit_categorias_despesa: false,
       excluir_categoria_despesa: false,
       excluir_categoria_receita: false,
-    
+
       usuario: undefined,
 
       exibe_categorias_receitas: false,
@@ -281,14 +458,14 @@ export default {
     };
   },
   methods: {
-    formatar: function(valor) {
+    formatar: function (valor) {
       try {
-        return parseFloat(valor).toFixed(2)
+        return parseFloat(valor).toFixed(2);
       } catch {
-        return 0
+        return 0;
       }
     },
-    esconde_opcoes: function() {
+    esconde_opcoes: function () {
       if (this.opcoes_menu) {
         this.botao_menu = true;
         this.opcoes_menu = false;
@@ -303,107 +480,117 @@ export default {
     adicionar_categoria: async function () {
       var add_rota;
 
-      if (this.tipo_categoria === "receita") add_rota = endpoints.categorias_receitas
-      else add_rota = endpoints.categorias_despesas
-      
+      if (this.tipo_categoria === "receita")
+        add_rota = endpoints.categorias_receitas;
+      else add_rota = endpoints.categorias_despesas;
+
       const response = await fetch(add_rota + this.usuario.email, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify ({
+        body: JSON.stringify({
           nome: this.nome_categoria,
-          cor: this.cor_categoria
-        })
-      })
-      
-      if (await response != undefined) {
+          cor: this.cor_categoria,
+        }),
+      });
+
+      if ((await response) != undefined) {
         this.usuario = await response.json();
 
-        if (this.usuario.categorias_receitas.length > 0) this.exibe_categorias_receitas = true;
-        if (this.usuario.categorias_despesas.length > 0) this.exibe_categorias_despesas = true;
-        
-        this.limpar_campos(); 
+        if (this.usuario.categorias_receitas.length > 0)
+          this.exibe_categorias_receitas = true;
+        if (this.usuario.categorias_despesas.length > 0)
+          this.exibe_categorias_despesas = true;
+
+        this.limpar_campos();
         this.add_categoria = !this.add_categoria;
       }
     },
 
     seleciona_categoria_receita: async function (receita) {
-      const index = this.usuario.categorias_receitas.findIndex(obj => obj.id === receita);
+      const index = this.usuario.categorias_receitas.findIndex(
+        (obj) => obj.id === receita
+      );
 
-      this.nome_categoria = this.usuario.categorias_receitas[index].nome
-      this.cor_categoria = this.usuario.categorias_receitas[index].cor
-      this.id_categoria = this.usuario.categorias_receitas[index].id      
+      this.nome_categoria = this.usuario.categorias_receitas[index].nome;
+      this.cor_categoria = this.usuario.categorias_receitas[index].cor;
+      this.id_categoria = this.usuario.categorias_receitas[index].id;
     },
     seleciona_categoria_despesa: async function (receita) {
-      const index = this.usuario.categorias_despesas.findIndex(obj => obj.id === receita);
+      const index = this.usuario.categorias_despesas.findIndex(
+        (obj) => obj.id === receita
+      );
 
-      this.nome_categoria = this.usuario.categorias_despesas[index].nome
-      this.cor_categoria = this.usuario.categorias_despesas[index].cor
-      this.id_categoria = this.usuario.categorias_despesas[index].id 
-      
+      this.nome_categoria = this.usuario.categorias_despesas[index].nome;
+      this.cor_categoria = this.usuario.categorias_despesas[index].cor;
+      this.id_categoria = this.usuario.categorias_despesas[index].id;
     },
 
     editar_categoria: async function (receita) {
       var rota;
-      if (receita) rota = endpoints.categorias_receitas_editar
-      else rota = endpoints.categorias_despesas_editar
-      
+      if (receita) rota = endpoints.categorias_receitas_editar;
+      else rota = endpoints.categorias_despesas_editar;
+
       const response = await fetch(rota + this.usuario.email, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify ({
+        body: JSON.stringify({
           id: this.id_categoria,
           nome: this.nome_categoria,
-          cor: this.cor_categoria
-        })
-      })
-      
+          cor: this.cor_categoria,
+        }),
+      });
+
       this.edit_categorias_receita = false;
       this.edit_categorias_despesa = false;
-      
-      if (await response != undefined) {
+
+      if ((await response) != undefined) {
         this.usuario = await response.json();
 
-        
-        this.limpar_campos(); 
+        this.limpar_campos();
       }
     },
 
     remover_categoria: async function (receita) {
       var rota;
-      if (receita) rota = endpoints.categorias_receitas
-      else rota = endpoints.categorias_despesas
-      
-      const query = "?item_id=" + this.id_categoria
-      const response = await fetch(rota + this.usuario.email + query,  { method: 'DELETE'})
-      
-      if (await response != undefined) {
+      if (receita) rota = endpoints.categorias_receitas;
+      else rota = endpoints.categorias_despesas;
+
+      const query = "?item_id=" + this.id_categoria;
+      const response = await fetch(rota + this.usuario.email + query, {
+        method: "DELETE",
+      });
+
+      if ((await response) != undefined) {
         this.usuario = await response.json();
 
-        if (this.usuario.categorias_receitas.length == 0) this.exibe_categorias_receitas = false;
-        if (this.usuario.categorias_despesas.length == 0) this.exibe_categorias_despesas = false;
-        
+        if (this.usuario.categorias_receitas.length == 0)
+          this.exibe_categorias_receitas = false;
+        if (this.usuario.categorias_despesas.length == 0)
+          this.exibe_categorias_despesas = false;
+
         this.limpar_campos();
-        
+
         this.excluir_categoria_receita = false;
         this.excluir_categoria_despesa = false;
-
       }
-    }
+    },
   },
   created: async function () {
     this.limpar_campos();
     const email = localStorage.email;
     const response = await fetch(endpoints.usuario + email);
     this.usuario = await response.json();
-    if (this.usuario.categorias_receitas.length > 0) this.exibe_categorias_receitas = true;
-    if (this.usuario.categorias_despesas.length > 0) this.exibe_categorias_despesas = true;
-  }
+    if (this.usuario.categorias_receitas.length > 0)
+      this.exibe_categorias_receitas = true;
+    if (this.usuario.categorias_despesas.length > 0)
+      this.exibe_categorias_despesas = true;
+  },
 };
 </script>
 
@@ -435,7 +622,6 @@ label {
 }
 h6 {
   margin: 200px 50px;
-
 }
 a {
   margin: 10px;
